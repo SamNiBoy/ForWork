@@ -1,0 +1,6 @@
+RUN {
+allocate channel c1 type disk;
+backup database format 'D:/oracle/mybkup/db_%U.bkf' plus archivelog delete all input format 'D:/oracle/mybkup/arch_%U';
+release channel c1;
+}
+exit

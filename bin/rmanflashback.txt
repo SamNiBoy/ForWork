@@ -1,0 +1,7 @@
+RUN {
+shutdown immediate;
+startup mount;
+flashback database to restore point rsp1;
+alter database open resetlogs;
+}
+exit

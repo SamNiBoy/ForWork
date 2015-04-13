@@ -1,0 +1,5 @@
+RUN {
+drop restore point rsp1;
+create restore point rsp1;
+}
+exit

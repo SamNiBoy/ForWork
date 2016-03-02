@@ -1,5 +1,6 @@
 #call this command with parameter 'commitID WMD-xxxx target_branch1 target_branch2 -T"pull request title" @ReviewerID
 #CreatePullRequest.pl 222116c WMD-12345 release/8.2 release/9.1 -T"Your Pull Request Title" @n1015874
+#by Sam Ni 2016/03/01
 
 sub printHelp() {
 	print "\nAuto create pull request script help:\n";
@@ -51,12 +52,13 @@ elsif (@target_branch == 0) {
 	exit(0);
 }
 
+
 #print parameters:
 print "\nCommit: ", $commitID;
 print "\nJira: ", $jira;
 print "\nTitle: ", substr($title, 2);
 print "\nReviewer: ", substr($reviewer, 1);
-	
+
 $idx = 0;
 while($idx < @target_branch) {
 		print "\nTarget branch:$target_branch[$idx]";
@@ -83,54 +85,56 @@ while($idx < @target_branch) {
 	    	    else {
 	    	    	 die "\nCan not pull for:$target_branch[$idx], exit...\n";
 	    	    }
-	      }
-	      else {
-	     		   print "\nStep 2. Merge $target_branch[$idx]...\n";
-	    	     if (system("git reset --hard HEAD^") == 0 &&
+        }
+        else {
+	          print "\nStep 2. Merge $target_branch[$idx]...\n";
+	    	    if (system("git reset --hard HEAD^") == 0 &&
 	    	        system("git merge") == 0) {
-	    	         print "\nMerged branch:$target_branch[$idx] successe.\n";
-	    	     }
-	    	     else {
-	    	    	 die "\nCan not merge for:$target_branch[$idx], exit...\n";
-	    	     }
-	      }
-			
-			  print "\nStep 3. Cherry pick commit $commitID to $target_branch[$idx]...\n";
-			  if (system("git cherry-pick $commitID") == 0) {
-			      print "\nCherry picked commit $commitID to branch:$target_branch[$idx] successe.\n";
-			  }
-			  else {
-			  	  print "\nCherry picked commit $commitID to branch:$target_branch[$idx] failed, continue...\n";
-			  	  continue;
-			  }
-			  
-			  #Get the name of remote new branch, for exmaple if target branch is 'release/8.2' then the name will be 'WMD-xxxx_8.2'.
-			  $sufix = rindex($target_branch[$idx], "\/");
-			  if ($sufix >= 0) {
-			  	$sufix_name = substr($target_branch[$idx], $sufix + 1);
-			  }
-			  else {
-			  	$sufix_name = $target_branch[$idx];
-			  }
-			  $remote_branch_name = "fix/$jira\_$sufix_name";
-			  
-			  print "\nStep 4. push to remote with new branch '$remote_branch_name'...\n";
+	    	        print "\nMerged branch:$target_branch[$idx] successe.\n";
+	    	    }
+		        else {
+			          die "\nCan not merge for:$target_branch[$idx], exit...\n";
+		        }
+        }
 
-			  if (system("git push origin HEAD:$remote_branch_name") == 0) {
-			  	print "\nPushed new remote branch 'fix/$jira_$target_branch[$idx]' success...\n";
-			  }
-			  else {
-			  	print "\nPushed to remote new branch 'fix/$jira_$target_branch[$idx]' failed, continue...\n";
-			  	continue;
-			  }
-			  
-			  print "\nStep 5. Creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
-			  if (system("stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer") == 0) { 	
-			      print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] successe.\n";
-			  }
-			  else {
-			  	  print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] failed, continue.\n";
-			  }
+        print "\nStep 3. Cherry pick commit $commitID to $target_branch[$idx]...\n";
+        if (system("git cherry-pick $commitID") == 0) {
+            print "\nCherry picked commit $commitID to branch:$target_branch[$idx] successe.\n";
+        }
+        else {
+              print "\nCherry picked commit $commitID to branch:$target_branch[$idx] failed, continue...\n";
+              continue;
+        }
+
+        #Get the name of remote new branch, for exmaple if target branch is 'release/8.2' then the name will be 'WMD-xxxx_8.2'.
+        $sufix = rindex($target_branch[$idx], "\/");
+        if ($sufix >= 0) {
+            $sufix_name = substr($target_branch[$idx], $sufix + 1);
+        }
+        else {
+            $sufix_name = $target_branch[$idx];
+        }
+        $remote_branch_name = "fix/$jira\_$sufix_name";
+
+        print "\nStep 4. push to remote with new branch '$remote_branch_name'...\n";
+
+        if (system("git push origin HEAD:$remote_branch_name") == 0) {
+            print "\nPushed new remote branch 'fix/$jira\_$target_branch[$idx]' success...\n";
+        }
+        else {
+            print "\nPushed to remote new branch 'fix/$jira\_$target_branch[$idx]' failed, continue...\n";
+            continue;
+        }
+
+        #Add ", jiraID and branch sufix for title msg.
+        $title = "-T\"$jira\_$sufix_name ".substr($title, 2)."\"";
+        print "\nStep 5. Creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
+        if (system("stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer") == 0) {
+            print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] successe.\n";
+        }
+        else {
+              print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] failed, continue.\n";
+        }
 		}
 		else {
 			print "\nCan not check out $target_branch[$idx], continue...\n";

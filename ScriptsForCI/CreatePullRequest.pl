@@ -4,9 +4,9 @@
 
 sub printHelp() {
 	print "\nAuto create pull request script help:\n";
-	print "1. Make sure run the scrip in the root directory of repository, like 'WMD'\n";
+	print "1. Make sure run the script in the root directory of repository, like 'WMD'\n";
 	print "2. Invoke it as 'perl createpullrequest.pl commitID JiraID target_branch1 target_branch2 -T\"pull request title\" \@ReviewerID \n";
-	print "2. For example 'perl createpullrequest.pl 222116c WMD-12345 release/8.2 release/9.1 -T\"WMD-12345_8.2 Fixed a core dump issue for allocation\" \@n1015874 \n";
+	print "3. For example 'perl createpullrequest.pl 222116c WMD-12345 release/8.2 release/9.1 -T\"Fixed a core dump issue for allocation\" \@n1015874 \n";
 }
 
 if ($#ARGV < 4) {
@@ -67,6 +67,9 @@ while($idx < @target_branch) {
 
 #Now creating pull request for each target branch:
 $idx = 0;
+$ori_title = $title;
+@brhs = ();
+@pulreqs = ();
 while($idx < @target_branch) {
 
 	  print "\n\n\nNow handling target branch: $target_branch[$idx]\n";
@@ -103,6 +106,7 @@ while($idx < @target_branch) {
         }
         else {
               print "\nCherry picked commit $commitID to branch:$target_branch[$idx] failed, continue...\n";
+              $idx++;
               continue;
         }
 
@@ -123,14 +127,20 @@ while($idx < @target_branch) {
         }
         else {
             print "\nPushed to remote new branch 'fix/$jira\_$target_branch[$idx]' failed, continue...\n";
+            $idx++;
             continue;
         }
 
         #Add ", jiraID and branch sufix for title msg.
-        $title = "-T\"$jira\_$sufix_name ".substr($title, 2)."\"";
+        $title = "-T\"$jira\_$sufix_name ".substr($ori_title, 2)."\"";
+        
         print "\nStep 5. Creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
-        if (system("stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer") == 0) {
+
+        $cmd = "stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer";
+        if ($pulreq = `$cmd`) {
             print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] successe.\n";
+            @brhs = (@brhs, $sufix_name);
+            @pulreqs = (@pulreqs, $pulreq);
         }
         else {
               print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] failed, continue.\n";
@@ -140,4 +150,18 @@ while($idx < @target_branch) {
 			print "\nCan not check out $target_branch[$idx], continue...\n";
 		}
 	  $idx++;
+}
+
+$pulcnt = @pulreqs;
+print "Step 6. Total $pulcnt pull requests created:\n";
+
+foreach $bidx (0 .. $#brhs)
+{
+    print "$brhs[$bidx]:$pulreqs[$bidx]";
+}
+
+$cmd = "git show $commitID | grep +++";
+if ($filelst=`$cmd`)
+{
+     print "$filelst";
 }

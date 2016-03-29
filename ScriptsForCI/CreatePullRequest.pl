@@ -123,12 +123,29 @@ while($idx < @target_branch) {
         print "\nStep 4. push to remote with new branch '$remote_branch_name'...\n";
 
         if (system("git push origin HEAD:$remote_branch_name") == 0) {
-            print "\nPushed new remote branch 'fix/$jira\_$target_branch[$idx]' success...\n";
+            print "\nPushed new remote branch '$remote_branch_name' success...\n";
         }
         else {
-            print "\nPushed to remote new branch 'fix/$jira\_$target_branch[$idx]' failed, continue...\n";
-            $idx++;
-            continue;
+            print "\nPushed new remote branch '$remote_branch_name' failed, try removing remote branch...\n";
+
+            if (system("git push origin :$remote_branch_name") == 0) {
+
+                print "\n removed remote branch '$remote_branch_name' success, try recreating remote branch...\n";
+
+                if (system("git push origin HEAD:$remote_branch_name") == 0) {
+                    print "\nPushed new remote branch '$remote_branch_name' success...\n";
+                }
+                else {
+                    print "\nPush remote new branch '$remote_branch_name' failed, continue...\n";
+                    $idx++;
+                    continue;
+                }
+            }
+            else {
+                print "\nPush remote new branch '$remote_branch_name' failed, continue...\n";
+                $idx++;
+                continue;
+            }
         }
 
         #Add ", jiraID and branch sufix for title msg.

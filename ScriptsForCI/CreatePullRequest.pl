@@ -67,6 +67,7 @@ while($idx < @target_branch) {
 
 #Now creating pull request for each target branch:
 $idx = 0;
+$repush_mode = 0;
 $ori_title = $title;
 @brhs = ();
 @pulreqs = ();
@@ -75,29 +76,29 @@ while($idx < @target_branch) {
 	  print "\n\n\nNow handling target branch: $target_branch[$idx]\n";
 	  
 		print "\nStep 1. Checking out branch:$target_branch[$idx]...\n";
-		if (system("git checkout -f $target_branch[$idx]") == 0) {
-	    	print "\nChecked out branch:$target_branch[$idx] successe.\n";
+	if (system("git checkout -f $target_branch[$idx]") == 0) {
+    	print "\nChecked out branch:$target_branch[$idx] successe.\n";
 	    	
-	    	#We only pull one time when it's first time.
-	    	if ($idx == 0) {
-	    	    print "\nStep 2. Pull remote $target_branch[$idx]...\n";
-	    	    if (system("git reset --hard HEAD^") == 0 &&
-	    	        system("git merge") == 0) {
-	    	        print "\nPulled branch:$target_branch[$idx] successe.\n";
-	    	    }
-	    	    else {
-	    	    	 die "\nCan not pull for:$target_branch[$idx], exit...\n";
-	    	    }
+    	#We only pull one time when it's first time.
+    	if ($idx == 0) {
+    	    print "\nStep 2. Pull remote $target_branch[$idx]...\n";
+    	    if (system("git reset --hard HEAD^") == 0 &&
+    	        system("git merge") == 0) {
+    	        print "\nPulled branch:$target_branch[$idx] successe.\n";
+    	    }
+    	    else {
+    	    	 die "\nCan not pull for:$target_branch[$idx], exit...\n";
+    	    }
         }
         else {
-	          print "\nStep 2. Merge $target_branch[$idx]...\n";
-	    	    if (system("git reset --hard HEAD^") == 0 &&
-	    	        system("git merge") == 0) {
-	    	        print "\nMerged branch:$target_branch[$idx] successe.\n";
-	    	    }
-		        else {
-			          die "\nCan not merge for:$target_branch[$idx], exit...\n";
-		        }
+          print "\nStep 2. Merge $target_branch[$idx]...\n";
+    	    if (system("git reset --hard HEAD^") == 0 &&
+    	        system("git merge") == 0) {
+    	        print "\nMerged branch:$target_branch[$idx] successe.\n";
+    	    }
+	        else {
+		          die "\nCan not merge for:$target_branch[$idx], exit...\n";
+	        }
         }
 
         print "\nStep 3. Cherry pick commit $commitID to $target_branch[$idx]...\n";
@@ -130,6 +131,7 @@ while($idx < @target_branch) {
 
             if (system("git push origin :$remote_branch_name") == 0) {
 
+                $repush_mode = 1;
                 print "\n removed remote branch '$remote_branch_name' success, try recreating remote branch...\n";
 
                 if (system("git push origin HEAD:$remote_branch_name") == 0) {
@@ -148,25 +150,30 @@ while($idx < @target_branch) {
             }
         }
 
-        #Add ", jiraID and branch sufix for title msg.
-        $title = "-T\"$jira\_$sufix_name ".substr($ori_title, 2)."\"";
-        
-        print "\nStep 5. Creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
+        if ($repush_mode == 0) {
+            #Add ", jiraID and branch sufix for title msg.
+            $title = "-T\"$jira\_$sufix_name ".substr($ori_title, 2)."\"";
+            
+            print "\nStep 5. Creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
 
-        $cmd = "stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer";
-        if ($pulreq = `$cmd`) {
-            print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] successe.\n";
-            @brhs = (@brhs, $sufix_name);
-            @pulreqs = (@pulreqs, $pulreq);
+            $cmd = "stash pull-request origin/$remote_branch_name origin/$target_branch[$idx] $title $reviewer";
+            if ($pulreq = `$cmd`) {
+                print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] successe.\n";
+                @brhs = (@brhs, $sufix_name);
+                @pulreqs = (@pulreqs, $pulreq);
+            }
+            else {
+                  print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] failed, continue.\n";
+            }
         }
         else {
-              print "\nCreated pull request from $remote_branch_name to $target_branch[$idx] failed, continue.\n";
+            print "\nStep 5. repush target branch mode, skip creating pull request from '$remote_branch_name' to '$target_branch[$idx]'.\n";
         }
-		}
-		else {
-			print "\nCan not check out $target_branch[$idx], continue...\n";
-		}
-	  $idx++;
+	}
+	else {
+		print "\nCan not check out $target_branch[$idx], continue...\n";
+	}
+    $idx++;
 }
 
 $pulcnt = @pulreqs;

@@ -1,0 +1,2014 @@
+diff --git a/db/data/load/base/bootstraponly/les_mnu_itm/rdt_les_mnu_itm.csv b/db/data/load/base/bootstraponly/les_mnu_itm/rdt_les_mnu_itm.csv
+index 6521f0d..a39fc56 100644
+--- a/db/data/load/base/bootstraponly/les_mnu_itm/rdt_les_mnu_itm.csv
++++ b/db/data/load/base/bootstraponly/les_mnu_itm/rdt_les_mnu_itm.csv
+@@ -55,6 +55,7 @@ mtfmnuReceiving,mtfoptSortedDeposit,60,mtfoptSortedDeposit,mtf_dcs_data
+ mtfmnuReceiving,mtfoptReopenTrk,70,mtfoptReopenTrk,mtf_dcs_data
+ mtfmnuReceiving,mtfoptCloseRcvTrlr,80,mtfoptCloseRcvTrlr,mtf_dcs_data
+ mtfmnuReceiving,mtfoptReturnTruck,90,mtfoptReturnTruck,mtf_dcs_data
++mtfmnuReceiving,mtfoptHXUndirPutaway,100,mtfoptHXUndirPutaway,mtf_dcs_data
+ mtfmnuReceiving,mtfoptInboundQuality,110,mtfoptInboundQuality,mtf_dcs_data
+ mtfmnuReceiving,mtfoptReceiveAsset,120,mtfoptReceiveAsset,mtf_dcs_data
+ mtfmnuReceiving,mtfoptReverseAsset,130,mtfoptReverseAsset,mtf_dcs_data
+diff --git a/db/data/load/base/bootstraponly/les_opt_ath/rdt_les_opt_ath.csv b/db/data/load/base/bootstraponly/les_opt_ath/rdt_les_opt_ath.csv
+index 030fac4..a8331ad 100644
+--- a/db/data/load/base/bootstraponly/les_opt_ath/rdt_les_opt_ath.csv
++++ b/db/data/load/base/bootstraponly/les_opt_ath/rdt_les_opt_ath.csv
+@@ -74,6 +74,7 @@ mtfoptReverseProduction,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptReverseReceipt,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptReverseAsset,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptReturnTruck,R,MTF_SUPER,-1,mtf_dcs_data
++mtfoptHXUndirPutaway,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptSerialCaseDisp,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptSerialTransfer,R,MTF_SUPER,-1,mtf_dcs_data
+ mtfoptServerTrace,R,MTF_SUPER,-1,mtf_dcs_data
+diff --git a/db/data/load/base/safetoload/les_mls_cat/rdt_les_mls_cat_ttl.csv b/db/data/load/base/safetoload/les_mls_cat/rdt_les_mls_cat_ttl.csv
+index 317bcd7..7169183 100644
+--- a/db/data/load/base/safetoload/les_mls_cat/rdt_les_mls_cat_ttl.csv
++++ b/db/data/load/base/safetoload/les_mls_cat/rdt_les_mls_cat_ttl.csv
+@@ -187,6 +187,7 @@ ttlReceivingMenu,US_ENGLISH,LES,LES,LES,RF,0,0,"Receiving Menu",dcs_rdt_ttl
+ ttlReceive,US_ENGLISH,LES,LES,LES,RF,0,0,"Receive",dcs_rdt_ttl
+ ttlReturnArrival,US_ENGLISH,LES,LES,LES,RF,0,0,"Return Arrival",dcs_rdt_ttl
+ ttlReturnTruck,US_ENGLISH,LES,LES,LES,RF,0,0,"Return Arrival",dcs_rdt_ttl
++ttlHXUndirPutaway,US_ENGLISH,LES,LES,LES,RF,0,0,"HX Putaway",dcs_rdt_ttl
+ ttlReplPick,US_ENGLISH,LES,LES,LES,RF,0,0,"Replenish Pick",dcs_rdt_ttl
+ ttlServiceMenu,US_ENGLISH,LES,LES,LES,RF,0,0,"Workflow Menu",dcs_rdt_ttl
+ ttlSerialCaseDsp,US_ENGLISH,LES,LES,LES,RF,1,0,"Serial Case Dsp",dcs_rdt_ttl
+diff --git a/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_itm.csv b/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_itm.csv
+index e8efe6f..0e0adcb 100644
+--- a/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_itm.csv
++++ b/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_itm.csv
+@@ -268,6 +268,7 @@ mnu_itm,mtfoptReverseAsset,US_ENGLISH,0,"Reverse HU",dcs_mnuitm,""
+ mnu_itm,mtfoptReverseProduction,US_ENGLISH,0,"Reverse Prod",mtf_dcs_data,""
+ mnu_itm,mtfoptReverseReceipt,US_ENGLISH,0,"Reverse Order",mtf_dcs_data,""
+ mnu_itm,mtfoptReturnTruck,US_ENGLISH,0,"Return Arrival",mtf_dcs_data,""
++mnu_itm,mtfoptHXUndirPutaway,US_ENGLISH,0,"HX Putaway",mtf_dcs_data,""
+ mnu_itm,mtfoptSendMsg,US_ENGLISH,0,"Send Message",mtf_dcs_data,""
+ mnu_itm,mtfoptSerialCaseDisp,US_ENGLISH,0,"Serial Case Dsp",mtf_dcs_data,""
+ mnu_itm,mtfoptSerialTransfer,US_ENGLISH,0,"Serial Transfer",mtf_dcs_data,""
+diff --git a/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_opt.csv b/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_opt.csv
+index 5f058c9..9b03aea 100644
+--- a/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_opt.csv
++++ b/db/data/load/base/safetoload/sys_dsc_mst/sys_dsc_mst_mnu_opt.csv
+@@ -183,6 +183,7 @@ opt_nam,mtfoptReverseAsset,US_ENGLISH,0,"Device - Reverse Handling Unit",dcs_mnu
+ opt_nam,mtfoptReverseProduction,US_ENGLISH,0,"Device - Reverse Prod",mtf_dcs_data,""
+ opt_nam,mtfoptReverseReceipt,US_ENGLISH,0,"Device - Reverse Planned Inbound Order",mtf_dcs_data,""
+ opt_nam,mtfoptReturnTruck,US_ENGLISH,0,"Device - Return Arrival",mtf_dcs_data,""
++opt_nam,mtfoptHXUndirPutaway,US_ENGLISH,0,"Device - Return Arrival",mtf_dcs_data,""
+ opt_nam,mtfoptSendMsg,US_ENGLISH,0,"Device - Send Message",mtf_dcs_data,""
+ opt_nam,mtfoptSerialCaseDisp,US_ENGLISH,0,"Device - Serial Case Dsp",mtf_dcs_data,""
+ opt_nam,mtfoptSerialTransfer,US_ENGLISH,0,"Device - Serial Transfer",mtf_dcs_data,""
+diff --git a/db/data/load/wm/bootstraponly/les_mnu_opt/rdt_les_mnu_opt.csv b/db/data/load/wm/bootstraponly/les_mnu_opt/rdt_les_mnu_opt.csv
+index e9774eb..82734c4 100644
+--- a/db/data/load/wm/bootstraponly/les_mnu_opt/rdt_les_mnu_opt.csv
++++ b/db/data/load/wm/bootstraponly/les_mnu_opt/rdt_les_mnu_opt.csv
+@@ -69,6 +69,7 @@ mtfoptReverseAsset,O,-1,1,UNDIR_REVERSE_ASSET,,,mtf_dcs_data,
+ mtfoptReverseProduction,O,-1,1,UNDIR_REVERSE_PRODUCTION,,,mtf_dcs_data,
+ mtfoptReverseReceipt,O,-1,1,UNDIR_REVERSE_RECEIPT,,,mtf_dcs_data,
+ mtfoptReturnTruck,O,-1,1,RETURN_TRUCK,,,mtf_dcs_data,
++mtfoptHXUndirPutaway,O,-1,1,HX_UNDIR_PUTAWAY,,,mtf_dcs_data,
+ mtfoptSelectYardWork,O,-1,1,WORK_SELECTION,,,mtf_dcs_data,
+ mtfoptSendMsg,O,-1,1,TOOLS_SEND_MSG,,,mtf_dcs_data,
+ mtfoptSerialCaseDisp,O,-1,1,UNDIR_SERIALCASE,,,mtf_dcs_data,
+diff --git a/db/data/load/wm/safetoload/rf_frm_mst/rf_frm_mst.csv b/db/data/load/wm/safetoload/rf_frm_mst/rf_frm_mst.csv
+index e9c258d..b536279 100644
+--- a/db/data/load/wm/safetoload/rf_frm_mst/rf_frm_mst.csv
++++ b/db/data/load/wm/safetoload/rf_frm_mst/rf_frm_mst.csv
+@@ -187,6 +187,7 @@ RESET_HOME_WORK_AREA,0,"com.redprairie.wmd.formlogic.ResetHomeWorkArea",dcs_data
+ RESET_RFID_READER,0,"com.redprairie.wmd.formlogic.ResetRfidReader",dcs_data
+ RESET_VEHICLE_TYPE,0,"com.redprairie.wmd.formlogic.ResetVehicleType",dcs_data
+ RETURN_TRUCK,0,"com.redprairie.wmd.formlogic.ReturnTruck",dcs_data
++HX_UNDIR_PUTAWAY,0,"com.redprairie.wmd.formlogic.HXUndirPutaway",dcs_data
+ SCAN_BARCODE,0,"com.redprairie.wmd.formlogic.ScanBarCode",dcs_data
+ SERIALCASE,0,"com.redprairie.wmd.formlogic.Serialcase",dcs_data
+ SHIPMENT_COMPLETE,0,"com.redprairie.wmd.formlogic.ShipmentComplete",dcs_data
+diff --git a/mtfclient/src/java/com/redprairie/wmd/formlogic/DepositA.java b/mtfclient/src/java/com/redprairie/wmd/formlogic/DepositA.java
+index 374540c..6d7e234 100644
+--- a/mtfclient/src/java/com/redprairie/wmd/formlogic/DepositA.java
++++ b/mtfclient/src/java/com/redprairie/wmd/formlogic/DepositA.java
+@@ -6605,7 +6605,7 @@ public class DepositA extends AFormLogic {
+                 catch (MocaException e) {
+                     retStatus = e.getErrorCode();
+                 }
+-
++                log.trace("test location 01:" +display.getVariable("INIT_POLICIES.prvfrm"));
+                 if (retStatus != WMDErrors.eOK) {
+                     display.beep();
+                     frmMain.displayErrorMessage();
+@@ -6617,17 +6617,18 @@ public class DepositA extends AFormLogic {
+                     if (display.getFormOnStack("LOGOUT_FORM") != null) {
+                         frmMain.formBack();
+                     }
+-
++                     log.trace("test location 02:" +display.getVariable("INIT_POLICIES.prvfrm"));
+                     if (CMtfUtil.verify(wmdMtf.getWrkQue().getOprCod(),
+                             WMDConstants.RF_OPR_UNDIR_TRANSFER) == 1
+                         && !display.getVariable("INIT_POLICIES.prvfrm")
+-                            .equals("UNDIR_PUTAWAY")
++                            .equals("UNDIR_PUTAWAY") && !display.getVariable("INIT_POLICIES.prvfrm")
++                            .equals("HX_UNDIR_PUTAWAY")
+                         && (!("INLINE_TRANSFER").equals(
+                             display.getVariable("INIT_POLICIES.prvfrm")))) {
+                         newFrm = display.createFormLogic("UNDIR_TRANSFER");
+                         newFrm.run();
+                     }
+-
++                   log.trace("test location 03:" +display.getVariable("INIT_POLICIES.prvfrm"));
+                     if (("INLINE_TRANSFER").equals(
+                             display.getVariable("INIT_POLICIES.prvfrm"))) {
+                         newFrm = display.createFormLogic("INLINE_TRANSFER");
+@@ -6732,9 +6733,10 @@ public class DepositA extends AFormLogic {
+                             display.getVariable("INIT_POLICIES.prvfrm"));
+                         newFrm.run();
+                     }
+-                    
++                    log.trace("test location 04:" +display.getVariable("INIT_POLICIES.prvfrm"));
+                     frmMain.formBack();
+                 }
++                 log.trace("test location 05:" +display.getVariable("INIT_POLICIES.prvfrm"));
+                 if (rs != null && retStatus == WMDErrors.eOK) {
+                     retStatus = CMtfUtil.getResults(display);
+                     rs = session.getGlobalMocaResults();
+@@ -6806,7 +6808,8 @@ public class DepositA extends AFormLogic {
+                     if (CMtfUtil.verify(wmdMtf.getWrkQue().getOprCod(),
+                         WMDConstants.RF_OPR_UNDIR_TRANSFER) == 1
+                         && !display.getVariable("INIT_POLICIES.prvfrm")
+-                            .equals("UNDIR_PUTAWAY")
++                            .equals("UNDIR_PUTAWAY") && !display.getVariable("INIT_POLICIES.prvfrm")
++                            .equals("HX_UNDIR_PUTAWAY")
+                         && (!("INLINE_TRANSFER").equals(
+                             display.getVariable("INIT_POLICIES.prvfrm"))
+                         && !display.getVariable("INIT_POLICIES.prvfrm")
+diff --git a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.java b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.java
+index 2cd73bd..db1699e 100644
+--- a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.java
++++ b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.java
+@@ -43,7 +43,7 @@ import org.apache.log4j.Logger;
+ import com.redprairie.moca.MocaException;
+ import com.redprairie.moca.MocaResults;
+ import com.redprairie.moca.NotFoundException;
+-
++import com.redprairie.mtf.CMtfUtil;
+ import com.redprairie.mtf.MtfConstants;
+ import com.redprairie.mtf.exceptions.XFailedRequest;
+ import com.redprairie.mtf.exceptions.XFormAlreadyOnStack;
+@@ -288,11 +288,20 @@ public class UndirIdentify extends AFormLogic {
+         efTempExecParm = segDef.createEntryField("temp_exec_parm");
+         efTempExecParm.setVisible(false);
+ 
++                
++        // Create invnum entry field and the label associated with it.
++        efInvNum = segDef.createEntryField("invnum", "lblInvNum");
++        efInvNum.setEnabled(true);
++        efInvNum.setVisible(true);
++        efInvNum.setEntryRequired(false);
++        actInvNum = this.new InvNumActions();
++        efInvNum.addWidgetAction(actInvNum);
++        
+         // Create rcv_id entry field and the label associated with it.
+         efRcvId = segDef.createEntryField("rcv_id", "lblRcvId");
+         efRcvId.setEnabled(true);
+         efRcvId.setVisible(true);
+-        efRcvId.setEntryRequired(true);
++        efRcvId.setEntryRequired(false);
+         actRcvId = this.new RcvIdActions();
+         efRcvId.addWidgetAction(actRcvId);
+ 
+@@ -311,7 +320,7 @@ public class UndirIdentify extends AFormLogic {
+         efTrkNum = segDef.createEntryField("trknum", "lblTrkNum");
+         efTrkNum.setVisible(true);
+         efTrkNum.setEnabled(true);
+-        efTrkNum.setEntryRequired(true);
++        efTrkNum.setEntryRequired(false);
+         actTrkNum = this.new TrkNumActions();
+         efTrkNum.addWidgetAction(actTrkNum);
+         
+@@ -320,14 +329,7 @@ public class UndirIdentify extends AFormLogic {
+         efLblFlg.setEnabled(true);
+         efLblFlg.setVisible(false);
+         efLblFlg.setEntryRequired(true);
+-        
+-        // Create invnum entry field and the label associated with it.
+-        efInvNum = segDef.createEntryField("invnum", "lblInvNum");
+-        efInvNum.setEnabled(true);
+-        efInvNum.setVisible(true);
+-        efInvNum.setEntryRequired(true);
+-        actInvNum = this.new InvNumActions();
+-        efInvNum.addWidgetAction(actInvNum);
++
+         
+         // Create client_id entry field and the label associated with it.
+         efClientId = segDef.createEntryField("client_id", "lblClientId");
+@@ -2025,7 +2027,7 @@ public class UndirIdentify extends AFormLogic {
+             // disable the F9 key until they enter a valid master receipt
+             // since they aren't able to attempt to close it
+              cmdFkeyCloseRcvTrlr.setEnabled(false);
+-
++             efInvNum.setFocus();
+             // Allow onFormEntry action to complete.
+             return true;
+         }
+@@ -3105,8 +3107,37 @@ public class UndirIdentify extends AFormLogic {
+         public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+ 
+             MocaResults    rs         = session.getGlobalMocaResults();
++          
+             String         areaCode   = null;
+             
++            try {
++                 rs = null;
++                 rs = session.executeDSQL("[select distinct lin.trknum,              "
++                                       +"          lin.supnum,                       "
++                                       +"          lin.client_id,                    "
++                                       +"          lod.lodnum                        "
++                                       +"     from rcvlin lin                        "
++                                       +"     join invdtl dtl                        "
++                                       +"       on lin.rcvkey = dtl.rcvkey           "
++                                       +"      and lin.wh_id = '" + display.getVariable("global.wh_id")
++                                       +"'     and lin.invnum = '" +efInvNum.getText()
++                                       +"'    join invsub sub                        "
++                                       +"       on dtl.subnum = sub.subnum           "
++                                       +"     join invlod lod                        "
++                                       +"       on sub.lodnum = lod.lodnum]          ");
++                } catch (MocaException e) {
++                   
++                   frmMain.promptMessageAnyKey("ASN Inbound Shipment is Invalid");
++                   CMtfUtil.reenter(""); 
++                   return false;
++                }
++                
++                rs.next();
++                efSupNum.setText(rs.getString("supnum"));
++                efTrkNum.setText(rs.getString("trknum"));
++                efInvtId.setText(rs.getString("lodnum"));
++                efClientId.setText(rs.getString("client_id"));
++                efRcvId.setText(rs.getString("trknum"));
+             // Get related invoice information (if invoice number is unique and
+             // we are not creating a new master receipt).
+             if (!efTrlrStat.getText().equals(
+@@ -3482,10 +3513,7 @@ public class UndirIdentify extends AFormLogic {
+                 // IDENTIFY_LOAD form, we need to retain all the previously 
+                 // entered values.
+                 if (!efPrevForm.getText().equals("IDENTIFY_LOAD")) {
+-                    efInvNum.clear();
+-                    efSupNum.clear();
+-                    efClientId.setText(
+-                        display.getVariable("INIT_POLICIES.client_id"));
++
+                     efClientId.setEnabled(false);
+                 }
+             }
+diff --git a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.properties b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.properties
+index 4403709..bbf12ef 100644
+--- a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.properties
++++ b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirIdentify.properties
+@@ -6,24 +6,47 @@ UNDIR_IDENTIFY.autoLayout = false
+ 
+ # === Widget Sequencing (i.e. only used by framework's automatic layout engine) ===
+ 
+-segDef.vehicle.displaySequence = trlr_stat,yard_loc,delv_flg,lblflg,clsdte,_inpval,trlr_cod,rcvdck_inpval,trknum,trlr_id,trlr_num,rcv_id_translated,capture_asset,invflg,allow_trlr_chkin,need_to_checkin,prev_form,rcvdck_translated,lblRcvId,rcv_id,lblRcvDck,rcvdck,lblInvNum,invnum,lblClientId,client_id,lblSupNum,supnum,dstloc,lblTo,lblStoloc,lodnum,LblLodnum,subnum,LblSubnum,
+-segDef.handheld.displaySequence = trlr_stat,yard_loc,delv_flg,lblflg,clsdte,rcv_id_inpval,trlr_cod,rcvdck_inpval,trknum,trlr_id,trlr_num,rcv_id_translated,capture_asset,invflg,allow_trlr_chkin,need_to_checkin,prev_form,rcvdck_translated,lblRcvId,rcv_id,lblRcvDck,rcvdck,lblInvNum,invnum,lblClientId,client_id,lblSupNum,supnum,dstloc,lblTo,lblStoloc,lodnum,LblLodnum,subnum,LblSubnum,
++segDef.vehicle.displaySequence = trlr_stat,yard_loc,delv_flg,lblflg,clsdte,_inpval,trlr_cod,rcvdck_inpval,lblInvNum,invnum,trknum,trlr_id,trlr_num,rcv_id_translated,capture_asset,invflg,allow_trlr_chkin,need_to_checkin,prev_form,rcvdck_translated,lblRcvId,rcv_id,lblRcvDck,rcvdck,lblClientId,client_id,lblSupNum,supnum,dstloc,lblTo,lblStoloc,lodnum,LblLodnum,subnum,LblSubnum,
++segDef.handheld.displaySequence = trlr_stat,yard_loc,delv_flg,lblflg,clsdte,rcv_id_inpval,trlr_cod,rcvdck_inpval,lblInvNum,invnum,trknum,trlr_id,trlr_num,rcv_id_translated,capture_asset,invflg,allow_trlr_chkin,need_to_checkin,prev_form,rcvdck_translated,lblRcvId,rcv_id,lblRcvDck,rcvdck,lblInvNum,invnum,lblClientId,client_id,lblSupNum,supnum,dstloc,lblTo,lblStoloc,lodnum,LblLodnum,subnum,LblSubnum,
+ 
+ # === Field/Label Properties ===
+ 
+ # NOTE: widget ID of each entry field object should be equivalent to the value
+ # of var_nam (variable name) of that field on the form.
++
++invnum.limit = INVNUM_LEN
++invnum.dataType = string
++invnum.defaultData = 0
++invnum.tabOrder = 1
++invnum.tag = invnum
++invnum.vehicle.displayWidth = 15
++invnum.handheld.displayWidth = 15
++invnum.vehicle.left = 6
++invnum.handheld.left = 6
++invnum.vehicle.top = 1
++invnum.handheld.top = 1
++
++lblInvNum.mlsId = invnum
++lblInvNum.vehicle.left = 1
++lblInvNum.handheld.left = 1
++lblInvNum.vehicle.top = 1
++lblInvNum.handheld.top = 1
++lblInvNum.vehicle.labelWidth = 4
++lblInvNum.handheld.labelWidth = 4
++lblInvNum.vehicle.justify = left
++lblInvNum.handheld.justify = left
++
+ rcv_id.limit = TRKNUM_LEN
+ rcv_id.dataType = string
+ rcv_id.defaultData = 0
+-rcv_id.tabOrder = 1
++rcv_id.tabOrder = 2
+ rcv_id.tag = rcv_id
+ rcv_id.vehicle.displayWidth = 15
+ rcv_id.handheld.displayWidth = 12
+ rcv_id.vehicle.left = 9
+ rcv_id.handheld.left = 9
+-rcv_id.vehicle.top = 1
+-rcv_id.handheld.top = 1
++rcv_id.vehicle.top = 2
++rcv_id.handheld.top = 2
+ 
+ # NOTE: For each label/static text widget, please use a meaningful and unique 
+ # widget ID. For example, if the label describes a particular field, prefix the
+@@ -32,8 +55,8 @@ rcv_id.handheld.top = 1
+ lblRcvId.mlsId = rcv_id
+ lblRcvId.vehicle.left = 1
+ lblRcvId.handheld.left = 1
+-lblRcvId.vehicle.top = 1
+-lblRcvId.handheld.top = 1
++lblRcvId.vehicle.top = 2
++lblRcvId.handheld.top = 2
+ lblRcvId.vehicle.labelWidth = 7
+ lblRcvId.handheld.labelWidth = 7
+ lblRcvId.vehicle.justify = right
+@@ -42,8 +65,8 @@ lblRcvId.handheld.justify = right
+ lblStoloc.mlsId = lblStoloc
+ lblStoloc.vehicle.left = 1
+ lblStoloc.handheld.left = 1
+-lblStoloc.vehicle.top = 2
+-lblStoloc.handheld.top = 2
++lblStoloc.vehicle.top = 3
++lblStoloc.handheld.top = 3
+ lblStoloc.vehicle.labelWidth = 5
+ lblStoloc.handheld.labelWidth = 4
+ lblStoloc.vehicle.justify = left
+@@ -52,20 +75,20 @@ lblStoloc.handheld.justify = left
+ rcvdck.limit = STOLOC_LEN
+ rcvdck.dataType = string
+ rcvdck.defaultData = 0
+-rcvdck.tabOrder = 3
++rcvdck.tabOrder = 4
+ rcvdck.tag = rcvdck
+ rcvdck.vehicle.displayWidth = 15
+ rcvdck.handheld.displayWidth = 15
+ rcvdck.vehicle.left = 6
+ rcvdck.handheld.left = 6
+-rcvdck.vehicle.top = 2
+-rcvdck.handheld.top = 2
++rcvdck.vehicle.top = 3
++rcvdck.handheld.top = 3
+ 
+ lblRcvDck.mlsId = lblStoloc
+ lblRcvDck.vehicle.left = 1
+ lblRcvDck.handheld.left = 1
+-lblRcvDck.vehicle.top = 2
+-lblRcvDck.handheld.top = 2
++lblRcvDck.vehicle.top = 3
++lblRcvDck.handheld.top = 3
+ lblRcvDck.vehicle.labelWidth = 5
+ lblRcvDck.handheld.labelWidth = 4
+ lblRcvDck.vehicle.justify = left
+@@ -74,20 +97,20 @@ lblRcvDck.handheld.justify = left
+ trknum.limit = TRKNUM_LEN
+ trknum.dataType = string
+ trknum.defaultData = 0
+-trknum.tabOrder = 4
++trknum.tabOrder = 5
+ trknum.tag = trknum
+ trknum.vehicle.displayWidth = 10
+ trknum.handheld.displayWidth = 10
+ trknum.vehicle.left = 11
+ trknum.handheld.left = 11
+-trknum.vehicle.top = 3
+-trknum.handheld.top = 3
++trknum.vehicle.top = 4
++trknum.handheld.top = 4
+ 
+ lblTrkNum.mlsId = trknum
+ lblTrkNum.vehicle.left = 1
+ lblTrkNum.handheld.left = 1
+-lblTrkNum.vehicle.top = 3
+-lblTrkNum.handheld.top = 3
++lblTrkNum.vehicle.top = 4
++lblTrkNum.handheld.top = 4
+ lblTrkNum.vehicle.labelWidth = 9
+ lblTrkNum.handheld.labelWidth = 9
+ lblTrkNum.vehicle.justify = right
+@@ -116,28 +139,6 @@ lblInvtId.handheld.labelWidth = 3
+ lblInvtId.vehicle.justify = left
+ lblInvtId.handheld.justify = left
+ 
+-invnum.limit = INVNUM_LEN
+-invnum.dataType = string
+-invnum.defaultData = 0
+-invnum.tabOrder = 5
+-invnum.tag = invnum
+-invnum.vehicle.displayWidth = 15
+-invnum.handheld.displayWidth = 15
+-invnum.vehicle.left = 6
+-invnum.handheld.left = 6
+-invnum.vehicle.top = 4
+-invnum.handheld.top = 4
+-
+-lblInvNum.mlsId = invnum
+-lblInvNum.vehicle.left = 1
+-lblInvNum.handheld.left = 1
+-lblInvNum.vehicle.top = 4
+-lblInvNum.handheld.top = 4
+-lblInvNum.vehicle.labelWidth = 4
+-lblInvNum.handheld.labelWidth = 4
+-lblInvNum.vehicle.justify = left
+-lblInvNum.handheld.justify = left
+-
+ client_id.limit = CLIENT_ID_LEN
+ client_id.dataType = string
+ client_id.defaultData = 0
+@@ -185,7 +186,7 @@ lblSupNum.handheld.justify = left
+ dstloc.limit = DSTLOC_LEN
+ dstloc.dataType = string
+ dstloc.defaultData = 0
+-dstloc.tabOrder = 2
++dstloc.tabOrder = 3
+ dstloc.tag = dstloc
+ dstloc.vehicle.displayWidth = 10
+ dstloc.handheld.displayWidth = 15
+diff --git a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.java b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.java
+index 0d7d9f3..7266b38 100644
+--- a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.java
++++ b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.java
+@@ -48,13 +48,8 @@ import com.redprairie.mtf.foundation.presentation.IFormSegment;
+ import com.redprairie.mtf.foundation.presentation.IWidgetActionValidator;
+ import com.redprairie.mtf.foundation.presentation.IInteractiveWidget;
+ import com.redprairie.wmd.WMDConstants;
++import org.apache.log4j.Logger;
+ import com.redprairie.wmd.WMDErrors;
+-import com.redprairie.wmd.mtfutil.CWmdMtfUtil;
+-import com.redprairie.wmd.mtfutil.gs1.BarcodeActionAdapter;
+-import com.redprairie.wmd.mtfutil.gs1.BarcodeId;
+-import com.redprairie.wmd.mtfutil.gs1.CGs1Events;
+-import com.redprairie.wmd.mtfutil.gs1.SupplierClientIdentfier;
+-import com.redprairie.wmd.mtfutil.gs1.TemplateIdentifier;
+ 
+ 
+ /**
+@@ -80,7 +75,8 @@ import com.redprairie.wmd.mtfutil.gs1.TemplateIdentifier;
+ public class UndirInboundQuality extends AFormLogic {
+ 
+     // Instance Variables
+-
++   private static final Logger log = Logger.getLogger(About.class);
++    
+     public IWidgetActionValidator    actUndirInboundQuality;
+     public IFormSegment              segDef;
+     public IEntryField               efCarIbIssue;
+@@ -96,7 +92,6 @@ public class UndirInboundQuality extends AFormLogic {
+     public IEntryField               efInvnum;
+     public IWidgetActionValidator    actInvnum;
+     public IEntryField               efInvtid;
+-    public IWidgetActionValidator    actInvtid;
+     public IEntryField               efJunk;
+     public IEntryField               efPrtnum;
+     public IWidgetActionValidator    actPrtnum;    
+@@ -109,7 +104,7 @@ public class UndirInboundQuality extends AFormLogic {
+     public IEntryField               efVndIbIssue;
+     public IWidgetActionValidator    actVndIbIssue;
+     public IEntryField               efVndInbqty;
+-
++    public ICommand                  cmdFkeyCmp;
+     public ICommand                  cmdFkeyBack;
+     public ICommand                  cmdFkeyItmDtl;
+ 
+@@ -145,32 +140,24 @@ public class UndirInboundQuality extends AFormLogic {
+ 
+         efClientId = segDef.createEntryField("client_id", "LblClientId");
+         efClientId.setEnabled(false);
+-        efClientId.setVisible(true);
++        efClientId.setVisible(false);
+         efClientId.setEntryRequired(false);
+-        actClientId = this.new ClientIdActions();
+-        efClientId.addWidgetAction(actClientId);
+ 
+         efCarCod = segDef.createEntryField("carcod", "lblCarCod");
+         efCarCod.setEnabled(true);
+-        efCarCod.setVisible(true);
++        efCarCod.setVisible(false);
+         efCarCod.setEntryRequired(false);
+-        actCarCod = this.new CarCodActions();
+-        efCarCod.addWidgetAction(actCarCod);
+         
+         efTrlrNum = segDef.createEntryField("trlr_num", "lblTrlrNum");
+         efTrlrNum.setEnabled(true);
+-        efTrlrNum.setVisible(true);
++        efTrlrNum.setVisible(false);
+         efTrlrNum.setEntryRequired(false);
+-        actTrlrNum = this.new TrlrNumActions();
+-        efTrlrNum.addWidgetAction(actTrlrNum);
+ 
+ 
+         efTrkNum = segDef.createEntryField("trknum", "lblTrkNum");
+-        efTrkNum.setEnabled(true);
++        efTrkNum.setEnabled(false);
+         efTrkNum.setVisible(true);
+-        efTrkNum.setEntryRequired(true);
+-        actTrkNum = this.new TrkNumActions();
+-        efTrkNum.addWidgetAction(actTrkNum);
++        efTrkNum.setEntryRequired(false);
+ 
+         efInvnum = segDef.createEntryField("invnum", "LblInvnum");
+         efInvnum.setEnabled(true);
+@@ -183,8 +170,6 @@ public class UndirInboundQuality extends AFormLogic {
+         efPrtnum.setEnabled(true);
+         efPrtnum.setVisible(true);
+         efPrtnum.setEntryRequired(false);
+-        actPrtnum = this.new PrtnumActions(frmMain, segDef, new CGs1Events());
+-        efPrtnum.addWidgetAction(actPrtnum);
+         
+         efPrtnumInd = segDef.createEntryField("PrtnumInd");
+         efPrtnumInd.setEnabled(false);
+@@ -193,38 +178,32 @@ public class UndirInboundQuality extends AFormLogic {
+ 
+         efInvtid = segDef.createEntryField("invtid", "LblInvtid");
+         efInvtid.setEnabled(true);
+-        efInvtid.setVisible(true);
++        efInvtid.setVisible(false);
+         efInvtid.setEntryRequired(false);
+-        actInvtid = this.new InvtidActions(frmMain, segDef, new CGs1Events());
+-        efInvtid.addWidgetAction(actInvtid);
+ 
+         efCarIbIssue = segDef.createEntryField("car_ib_issue", "LblCarIbIssue");
+         efCarIbIssue.setEnabled(true);
+-        efCarIbIssue.setVisible(true);
++        efCarIbIssue.setVisible(false);
+         efCarIbIssue.setEntryRequired(false);
+-        actCarIbIssue = this.new CarIbIssueActions();
+-        efCarIbIssue.addWidgetAction(actCarIbIssue);
+ 
+         efCarInbqty = segDef.createEntryField("car_inbqty", "LblCarInbqty");
+         efCarInbqty.setEnabled(true);
+-        efCarInbqty.setVisible(true);
++        efCarInbqty.setVisible(false);
+         efCarInbqty.setEntryRequired(false);
+ 
+         efVndIbIssue = segDef.createEntryField("vnd_ib_issue", "LblVndIbIssue");
+         efVndIbIssue.setEnabled(true);
+         efVndIbIssue.setVisible(true);
+-        efVndIbIssue.setEntryRequired(false);
+-        actVndIbIssue = this.new VndIbIssueActions();
+-        efVndIbIssue.addWidgetAction(actVndIbIssue);
++        efVndIbIssue.setEntryRequired(true);
+ 
+         efSupnum = segDef.createEntryField("supnum", "LblSupnum");
+         efSupnum.setEnabled(true);
+-        efSupnum.setVisible(true);
++        efSupnum.setVisible(false);
+         efSupnum.setEntryRequired(false);
+ 
+         efVndInbqty = segDef.createEntryField("vnd_inbqty", "LblVndInbqty");
+         efVndInbqty.setEnabled(true);
+-        efVndInbqty.setVisible(true);
++        efVndInbqty.setVisible(false);
+         efVndInbqty.setEntryRequired(false);
+ 
+         // Create and bind function keys
+@@ -235,23 +214,11 @@ public class UndirInboundQuality extends AFormLogic {
+         frmMain.bind(cmdFkeyBack);
+         cmdFkeyBack.bind(MtfConstants.VK_FKEY_BACK);
+         
+-
+-        cmdFkeyItmDtl = this.new FkeyItmDtlCommand();
+-        cmdFkeyItmDtl.setVisible(false);
+-        frmMain.bind(cmdFkeyItmDtl);
+-        cmdFkeyItmDtl.bind(WMDConstants.VK_FKEY_ITMDTL);
+-    }
+-
+-    private TemplateIdentifier getTemplateIdentifier() {
+-        if (efSupnum.getText() != null && !efSupnum.getText().isEmpty() &&
+-                efClientId.getText() != null && !efClientId.getText().isEmpty()) {
+-            return new SupplierClientIdentfier(
+-                    display.getVariable("UNDIR_INBOUND_QUALITY.supnum"),
+-                    display.getVariable("UNDIR_INBOUND_QUALITY.client_id"));
+-        }
+-        else {
+-            return new BarcodeId(CWmdMtfUtil.getDefaultBarcodeTemplate(session));
+-        }
++        cmdFkeyCmp = this.new FkeyCmpCommand();
++        cmdFkeyCmp.setVisible(false);
++        frmMain.bind(cmdFkeyCmp);
++        cmdFkeyCmp.bind(WMDConstants.VK_FKEY_ENA_TO_ID);
++        
+     }
+ 
+     /**
+@@ -268,36 +235,6 @@ public class UndirInboundQuality extends AFormLogic {
+     }
+ 
+     /**
+-     * This class contains the entry/exit actions for the efInvtid field 
+-     */
+-    private class InvtidActions extends BarcodeActionAdapter {
+-
+-        public InvtidActions(IForm frmMain, IContainer segDef,
+-                CGs1Events workArounds) {
+-            super(frmMain, segDef, workArounds);
+-        }
+-
+-
+-        @Override
+-        protected TemplateIdentifier getBarcodeTemplateId() {
+-            return getTemplateIdentifier();
+-        }
+-
+-        @Override
+-        protected String gs1Value() {
+-            return efInvtid.getGs1Value();
+-        }
+-        
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            if(parseBarcodeValue(session)) {
+-                //Don't run validation again, its been validated
+-                return fieldValidationRan(session);
+-            }
+-            return true;
+-        }
+-    }
+-
+-    /**
+      * Defines extended ACommand for FkeyBack 
+      */
+     private class FkeyBackCommand extends ACommand {
+@@ -328,13 +265,13 @@ public class UndirInboundQuality extends AFormLogic {
+     /**
+      * Defines extended {@link ACommand} .
+      */
+-    private class FkeyItmDtlCommand extends ACommand {
++   private class FkeyCmpCommand extends ACommand {
+         /**
+          * Prime constructor.
+          */
+-        public FkeyItmDtlCommand() {
+-            super("cmdFkeyItmDtl", "FkeyItmDtl", WMDConstants.FKEY_ITEM_DETAIL, '2');
+-        }
++           public FkeyCmpCommand() {
++             super("cmdFkeyEnaToId", "FkeyEnaToId", WMDConstants.FKEY_ENA_TO_ID_CAPTION, '5');
++            }
+         /**
+          * Performs action for the {@link FkeyItmDtlCommand} function key.
+          *
+@@ -348,83 +285,44 @@ public class UndirInboundQuality extends AFormLogic {
+          * @throws XInvalidRequest 
+          * @throws XInvalidState 
+          */
+-        public void execute(IContainer _container) throws NullPointerException, ClassNotFoundException, XFormAlreadyOnStack, XInvalidState, XInvalidRequest, XInvalidArg, XFailedRequest, MocaException {
+-            AFormLogic newForm = display.createFormLogic("ITEM_DETAIL");
+-            display.setVariable("ITEM_DETAIL.prt_num" , efPrtnum.getText());
+-            newForm.run();
+-        }
+-        private static final long serialVersionUID = 0L;
+-    }
+-    
+-    /**
+-     * This class contains the entry/exit actions for the efCarIbIssue field 
+-     */
+-    private class CarIbIssueActions extends CWidgetActionAdapter {
+-
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
++           public void execute(IContainer _container) throws NullPointerException, ClassNotFoundException, XFormAlreadyOnStack, XInvalidArg, XFailedRequest, MocaException 
++           {
++            AFormLogic     newFrm     = null;
++            String         sqlCommand = "";
++            MocaResults    rs         = session.getGlobalMocaResults();
++            int            retStatus  = WMDErrors.eOK;
++            /*
++             * The Quality Validator use this Function Key to 
++             * check if there is work to do.
++             *
++             */
+             
+-            if (CMtfUtil.length(efCarIbIssue) == 1) {
+-                //  User has entered a carrier inbound issue,
+-                //  let's make sure that a carrier and an
+-                //  inbound quantity will get specified.
+-                //  If there is no carcod for this receive truck
+-                //  user is required to input it.
++            if(isQualityAuth)
++            {
++
++               sqlCommand = " [select distinct invnum,                                                          "
++                           +"          prtnum                                                                   "
++                           +"     from rcvlin lin                                                               "
++                           +"     join rcvinv inv                                                               "
++                           +"       on lin.invnum = inv.invnum                                                  "
++                           +"      and lin.wh_id = inv.wh_id                                                    "
++                           +"      and lin.supnum = inv.supnum                                                  "
++                           +"      and lin.trknum = inv.trknum                                                  "
++                           +"      and lin.client_id = inv.client_id                                            "
++                           +"      and inv.asnsts = '" +WMDConstants.RCV_ASN_STS_WAITING_QUALITY_VALIDATION+"'] "
++                           +"| choose data where columns = 'invnum,prtnum'";  
++              
++               display.setVariable("LOOKUP_FORM.sqlcmd", sqlCommand);
++               
++               newFrm = display.createFormLogic("LOOKUP_FORM", 
++                       MtfConstants.EFlow.SHOW_FORM);
++               newFrm.run();
++            } else{
+                 
+-                if (CMtfUtil.length(efCarCod) == 0) {
+-                    efCarCod.setEnabled(true);
+-                    efCarCod.setVisible(true);
+-                    efCarCod.setEntryRequired(true);
+-                }
+-                efCarInbqty.setEnabled(true);
+-                efCarInbqty.setVisible(true);
+-                efCarInbqty.setEntryRequired(true);
+-            }
+-            else if (CMtfUtil.length(efCarIbIssue) == 0) {
+-                //  User has not entered a carrier inbound issue,
+-                //  disable the carrier and carrier quantity fields
+-                //  so user won't be confused into entering unnecessary
+-                //  data at this point.  Let's clear carrier inbound 
+-                //  quantity. For carcod, we will clear carcod input
+-                //  by user and remain the one from receive truck.
+-                
+-                if (CMtfUtil.verify(efCarcodSetFlg.getText(), "1") == 0) {
+-                    efCarCod.clear();
+-                    efCarCod.setEnabled(false);
+-                    efCarCod.setVisible(true);
+-                    efCarCod.setEntryRequired(false);
+-                }
+-                efCarInbqty.clear();
+-                efCarInbqty.setEnabled(false);
+-                efCarInbqty.setVisible(true);
+-                efCarInbqty.setEntryRequired(false);
+-            }
+-            return true;
+-        }
+-    }
+-
+-    /**
+-     * This class contains the entry/exit actions for the efClientId field 
+-     */
+-    private class ClientIdActions extends CWidgetActionAdapter {
+-
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            
+-            if (CMtfUtil.length(efClientId) == 1) {
+-                efInvnum.setEnabled(true);
+-                efInvnum.setVisible(true);
+-                efInvnum.setEntryRequired(false);
+-                efVndIbIssue.setEnabled(true);
+-                efVndIbIssue.setVisible(true);
+-                efVndIbIssue.setEntryRequired(false);
+-                efSupnum.setEnabled(true);
+-                efSupnum.setVisible(true);
+-                efSupnum.setEntryRequired(false);
+-                efVndInbqty.setEnabled(true);
+-                efVndInbqty.setVisible(true);
+-                efVndInbqty.setEntryRequired(false);
++              frmMain.promptMessageAnyKey("Warning: No authorization to do this work");
+             }
+-            return true;
+-        }
++          }
++        private static final long serialVersionUID = 0L;
+     }
+ 
+     /**
+@@ -433,22 +331,16 @@ public class UndirInboundQuality extends AFormLogic {
+     private class InvnumActions extends CWidgetActionAdapter {
+ 
+         public boolean onFieldEntry(IInteractiveWidget _ef) throws Exception {
++            int  retStatus  = WMDErrors.eOK;
++            MocaResults    rs         = session.getGlobalMocaResults();
++          
++            efTrkNum.setEnabled(true);
++            efTrkNum.setVisible(false);
+             
+-            if (CMtfUtil.length(efInvnum) == 1) {
+-                // Let's disable the field if it
+-                // has been set by other forms.
+-                
+-                if (CMtfUtil.verifyPreviousForm(display, "UNDIR_MENU") == 0) {
+-                    efInvnum.setEnabled(false);
+-                    efInvnum.setVisible(true);
+-                    efInvnum.setEntryRequired(false);
+-                }
+-            }
+-            else if (CMtfUtil.length(efInvnum) == 0) {
+-                efInvnum.setEnabled(true);
+-                efInvnum.setVisible(true);
+-                efInvnum.setEntryRequired(false);
+-            }
++            efVndIbIssue.setEnabled(true);
++            efVndIbIssue.setVisible(true);
++            efPrtnum.clear();
++            efVndIbIssue.clear();
+             return true;
+         }
+ 
+@@ -457,342 +349,138 @@ public class UndirInboundQuality extends AFormLogic {
+             MocaResults    rs         = session.getGlobalMocaResults();
+             int            retStatus  = WMDErrors.eOK;
+             
+-            if (CMtfUtil.length(efInvnum) == 1) {
+-                // Try to set supnum according to invnum.
+-                try {
+-                    rs = null;
+-                    retStatus = WMDErrors.eOK;
+-                    rs = session.executeDSQL("[select supnum into :supnum                                   from rcvinv                                  where invnum = '" + efInvnum.getText() + "'                                    and client_id = '" + efClientId.getText() + "'                                   and wh_id = '" + display.getVariable("global.wh_id") + "']");
+-                }
+-                catch (MocaException e) {
+-                    retStatus = e.getErrorCode();
+-                }
+-                
+-                
+-                if (retStatus != WMDErrors.eOK) {
+-                    display.beep();
+-                    frmMain.displayErrorMessage();
+-                    // Reenter() - the field
+-                    return CMtfUtil.reenter("");
+-                }
+-                if (rs != null && retStatus == WMDErrors.eOK) {
+-                    retStatus = CMtfUtil.getResults(display);
+-                    rs = session.getGlobalMocaResults();
+-                }
+-
+-            }
+-            return true;
+-        }
+-    }
+-    
+-    /**
+-     * This class contains the entry/exit actions for the efCarCod field
+-     */
+-    private class CarCodActions extends CWidgetActionAdapter {
+-        
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            
+-            MocaResults rs = session.getGlobalMocaResults();
+-            
+-            // Try to populate the trailer number and master receipt ID fields
+-            // if the user scanned in a carrier code.
+-            if(efCarCod.getText().length() > 0) {
+-                try {
+-                    rs = null;
+-                    
+-                    rs = session.executeDSQL(
+-                         "[select rcvtrk.trknum, " +
+-                         "        trlr.trlr_num " +
+-                         "   from rcvtrk, " +
+-                         "        trlr " + 
+-                         "  where trlr.carcod  = '" + efCarCod.getText() + "'" +
+-                         "    and rcvtrk.wh_id = '" + display.getVariable("global.wh_id") + "' " +
+-                         "    and trlr.trlr_id = rcvtrk.trlr_id]");
+-                    
+-                    rs.next();
+-                    
+-                    if(rs.getRowCount() > 1) {
+-                        // Multiple records were returned so prompt the user 
+-                        // to input the trailer number.
+-                        return true;
+-                    }
+-                    else {
+-                        efTrlrNum.setText(rs.getString("trlr_num"));    
+-                        efTrkNum.setText(rs.getString("trknum"));
+-                        efCarcodSetFlg.setText("1");
+-                        
+-                        // Protect the carcod, trlr_num, and trknum fields.
+-                        efCarCod.setEnabled(false);
+-                        efCarCod.setVisible(true);
+-                        efCarCod.setEntryRequired(false);
+-                        efTrlrNum.setEnabled(false);
+-                        efTrlrNum.setVisible(true);
+-                        efTrlrNum.setEntryRequired(false);
+-                        efTrkNum.setEnabled(false);
+-                        efTrkNum.setVisible(true);
+-                        efTrkNum.setEntryRequired(false);
+-                        
+-                        efInvnum.setFocus();
+-                    }
+-                    
+-                }
+-                catch (MocaException e) {
+-                    if (e.getErrorCode() == WMDErrors.eDB_NO_ROWS_AFFECTED) {
+-                        display.beep();
+-                        frmMain.promptMessageAnyKey(WMDConstants.ERR_INV_CARCOD);
+-                    }
+-                    else {
+-                        display.beep();
+-                        frmMain.displayErrorMessage(e);
+-                    }
+-                    
+-                    // Reenter the field
+-                    return false;
+-                }
++            if(!(isCheckAuth || isQualityAuth))
++            {
++              frmMain.promptMessageAnyKey("Error: Current user doesn't have authorization!!!");
++              return false;
+             }
+-            return true;
+-        }
+-    }
+-    
+-    /**
+-     * This class contains the entry/exit actions for the efTrlrNum field
+-     */
+-    private class TrlrNumActions extends CWidgetActionAdapter {
+-        
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            
+-            MocaResults  rs          = session.getGlobalMocaResults();
+-            String       whereClause = "";
+             
+-            // Try to populate the trailer number and master receipt ID fields
+-            // if the user scanned in a carrier code.  
+-            if(efTrlrNum.getText().length() > 0) {
+-                try {
+-                    rs = null;
+-                    
+-                    if(efCarCod.getText().length() > 0) {
+-                        whereClause += " and trlr.carcod = '" + efCarCod.getText() + "'";
+-                    }
+-                    
+-                    rs = session.executeDSQL(
+-                         "[select rcvtrk.trknum, " +
+-                         "        trlr.carcod " +
+-                         "   from rcvtrk, " +
+-                         "        trlr " + 
+-                         "  where trlr.trlr_num = '" + efTrlrNum.getText() + "'" +
+-                         "    and trlr.trlr_id  = rcvtrk.trlr_id " +
+-                         "    and rcvtrk.wh_id  = '" + display.getVariable("global.wh_id") + "' " +
+-                              whereClause + "]");
+-                    
+-                    
+-                    rs.next();
+-                    
+-                    if(rs.getRowCount() > 1) {
+-                        // Multiple records were returned so prompt the user 
+-                        // to input the master receipt ID.
+-                        return true;
++            if (CMtfUtil.length(efInvnum) == 1) {
++                   
++                 try {
++                      rs = null;                 
++                      rs = session.executeDSQL(
++                           "[select tr.carcod,                                              " +
++                           "        tr.trlr_num,                                            " +
++                           "        lin.supnum,                                             " +
++                           "        lin.invnum,                                             " +
++                           "        lin.client_id,                                          " +
++                           "        lin.prtnum,                                             " +
++                           "        lin.trknum                                              " +
++                           "   from trlr tr                                                 " +
++                           "   join rcvtrk trk                                              " +
++                           "     on tr.trlr_id  = trk.trlr_id                               " +
++                           "   join rcvlin lin                                              " +
++                           "     on trk.trknum = lin.trknum                                 " +
++                           "    and lin.invnum = '" +efInvnum.getText() + "'" +
++                           "  where rownum < 2                                              " +
++                           "    and trk.wh_id  = '" + display.getVariable("global.wh_id") + "']");
++                      rs.next();
++                      
++                      efTrlrNum.setText(rs.getString("trlr_num"));
++                      efCarCod.setText(rs.getString("carcod"));
++                      efCarcodSetFlg.setText("1");
++                      efClientId.setText(rs.getString("client_id"));
++                      efPrtnum.setText(rs.getString("prtnum"));
++                      efSupnum.setText(rs.getString("supnum"));
++                      efTrkNum.setText(rs.getString("trknum"));
++                      efVndIbIssue.setText(WMDConstants.RCV_INV_VALIDATION_PASSED);
+                     }
+-                    else {
+-                        efTrkNum.setText(rs.getString("trknum"));
+-                        efCarCod.setText(rs.getString("carcod"));
+-                        efCarcodSetFlg.setText("1");
+-                        
+-                        // Protect the carcod, trlr_num, and trknum fields. 
+-                        efCarCod.setEnabled(false);
+-                        efCarCod.setVisible(true);
+-                        efCarCod.setEntryRequired(false);
+-                        efTrlrNum.setEnabled(false);
+-                        efTrlrNum.setVisible(true);
+-                        efTrlrNum.setEntryRequired(false);
+-                        efTrkNum.setEnabled(false);
+-                        efTrkNum.setVisible(true);
+-                        efTrkNum.setEntryRequired(false);
+-                        
+-                        efInvnum.setFocus();
++                    catch (MocaException e) {
++                      if (e.getErrorCode() == WMDErrors.eDB_NO_ROWS_AFFECTED) {
++                          display.beep();
++                          frmMain.promptMessageAnyKey(WMDConstants.MSG_INV_TRKNUM);
++                      }
++                      else {
++                          display.beep();
++                          frmMain.displayErrorMessage(e);
++                      }
++                      // Reenter the field
++                        return false;
+                     }
+                     
+-                }
+-                catch (MocaException e) {
+-                    if (e.getErrorCode() == WMDErrors.eDB_NO_ROWS_AFFECTED) {
+-                        display.beep();
+-                        frmMain.promptMessageAnyKey(WMDConstants.MSG_INV_TRLNUM);
+-                    }
+-                    else {
+-                        display.beep();
+-                        frmMain.displayErrorMessage(e);
+-                    }
++                  try {
++                        retStatus = WMDErrors.eOK;
++                        /*
++                         * We can allow ASN validation failed more than one time before
++                         * But only one record exists if it passed validation before.
++                         * Different role do Check and Quality Validation.
++                         * We can treate it as repeated when record exists and result status is not failed.
++                         *
++                         */
++                        session.executeDSQL("list inbound quality issues where wh_id = '" + display.getVariable("global.wh_id") 
++                                                                        + "' and client_id = '" + efClientId.getText() 
++                                                                        + "' and invnum = '" + efInvnum.getText() 
++                                                                        + "' and trknum = '" + efTrkNum.getText() 
++                                                                        + "' and prtnum = '" + efPrtnum.getText() 
++                                                                        + "' and invtid = '" + efInvtid.getText() 
++                                                                        + "' and ib_issue ='" + efVndIbIssue.getText()
++                                                                        + "' and ins_user_id = '" +display.getVariable ("global.usr_id")
++                                                                        + "' and supnum = '" + efSupnum.getText()
++                                                                        + "' and ib_issue != " +WMDConstants.RCV_INV_VALIDATION_FAILED);
++                      }
++                       catch (MocaException e) {
++                         retStatus = e.getErrorCode();
++                     }
++                     
++                   if( retStatus == WMDErrors.eOK)
++                    {
++                        frmMain.promptMessageAnyKey("Error, ASN has done before");
++                        return false;
++                    } 
++                     
++                    if(isCheckAuth && !isQualityAuth)
++                    {
++                      try {
++                       retStatus = WMDErrors.eOK;
++                       session.executeDSQL("[select 1 from rcvinv where wh_id = '" + display.getVariable("global.wh_id") 
++                                                                       + "' and client_id = '" + efClientId.getText() 
++                                                                       + "' and invnum = '" + efInvnum.getText() 
++                                                                       + "' and trknum = '" + efTrkNum.getText() 
++                                                                       + "' and supnum = '" + efSupnum.getText()
++                                                                       + "' and asnsts = '" + WMDConstants.RCV_ASN_STS_WAITING_CHECK+ "']");
++                      }
++                       catch (MocaException e) {
++                         retStatus = e.getErrorCode();
++                     }
++                      if(retStatus != WMDErrors.eOK)
++                      {
++                        frmMain.promptMessageAnyKey("Error: ASN is not for Receiving Check<Wrong status>!!");
++                        return false;                    
++                      }
++                   }
++                   
++                  if(isQualityAuth && !isCheckAuth)
++                    {
++                      try {
++                       retStatus = WMDErrors.eOK;
++                       session.executeDSQL("[select 1 from rcvinv where wh_id = '" + display.getVariable("global.wh_id") 
++                                                                       + "' and client_id = '" + efClientId.getText() 
++                                                                       + "' and invnum = '" + efInvnum.getText() 
++                                                                       + "' and trknum = '" + efTrkNum.getText() 
++                                                                       + "' and supnum = '" + efSupnum.getText()
++                                                                       + "' and asnsts = '" + WMDConstants.RCV_ASN_STS_WAITING_QUALITY_VALIDATION +"']");
++                      }
++                       catch (MocaException e) {
++                         retStatus = e.getErrorCode();
++                     }
++                      if(retStatus != WMDErrors.eOK)
++                      {
++                        frmMain.promptMessageAnyKey("Error: ASN is not for Quality validation<Wrong status>!!");
++                        return false;                    
++                      }
++                   }
++            } 
++            else
++            {
+                     
+-                    // Reenter the field
+-                    return false;
+-                }
++              display.beep();
++              frmMain.promptMessageAnyKey(WMDConstants.MSG_INV_TRKNUM);
++              return false;
+             }
+             return true;
+         }
+     }
+-    
+-    /**
+-     * This class contains the entry/exit actions for the efTrkNum field 
+-     */
+-    private class TrkNumActions extends CWidgetActionAdapter {
+-
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-
+-            MocaResults  rs          = session.getGlobalMocaResults();
+-            String       whereClause = "";
+-
+-            
+-            if (efTrkNum.getText().length() > 0) {
+-                
+-                if (efCarCod.getText().length() > 0) {
+-                    whereClause += " and trlr.carcod = '" + efCarCod.getText() + "'";
+-                }
+-                
+-                if (efTrlrNum.getText().length() > 0) {
+-                    whereClause += " and trlr.trlr_num = '" + efTrlrNum.getText() + "'";
+-                }
+-                
+-                // Try to set carcod and trlr_num according to trknum.
+-                try {
+-                    rs = null;
+-
+-                    rs = session.executeDSQL(
+-                         "[select trlr.carcod, " +
+-                         "        trlr.trlr_num " +
+-                         "   from trlr, " +
+-                         "        rcvtrk " +
+-                         "  where trlr.trlr_id  = rcvtrk.trlr_id " +
+-                         "    and rcvtrk.trknum = '" + efTrkNum.getText() + "'" +
+-                         "    and rcvtrk.wh_id  = '" + display.getVariable("global.wh_id") + "' " +
+-                              whereClause + "]");
+-                    
+-                    rs.next();
+-                    
+-                    efTrlrNum.setText(rs.getString("trlr_num"));
+-                    efCarCod.setText(rs.getString("carcod"));
+-                    efCarcodSetFlg.setText("1");
+-                    
+-                    // Protect the fields for carcod, trlr_num, and trknum 
+-                    efCarCod.setEnabled(false);
+-                    efCarCod.setVisible(true);
+-                    efCarCod.setEntryRequired(false);
+-                    efCarcodSetFlg.setText("1");
+-                    efTrlrNum.setEnabled(false);
+-                    efTrlrNum.setVisible(true);
+-                    efTrlrNum.setEntryRequired(false);
+-                    efTrkNum.setEnabled(false);
+-                    efTrkNum.setVisible(true);
+-                    efTrkNum.setEntryRequired(false);
+-                }
+-                catch (MocaException e) {
+-                    if (e.getErrorCode() == WMDErrors.eDB_NO_ROWS_AFFECTED) {
+-                        display.beep();
+-                        frmMain.promptMessageAnyKey(WMDConstants.MSG_INV_TRKNUM);
+-                    }
+-                    else {
+-                        display.beep();
+-                        frmMain.displayErrorMessage(e);
+-                    }
+-                    
+-                    // Reenter the field
+-                    return false;
+-                }
+-                
+-                if (efClientId.getText().length() > 0) {
+-                    efInvnum.setEnabled(true);
+-                    efInvnum.setVisible(true);
+-                    efInvnum.setEntryRequired(false);
+-                }
+-                else {
+-                    efInvnum.clear();
+-                    efInvnum.setEnabled(false);
+-                    efInvnum.setVisible(true);
+-                    efInvnum.setEntryRequired(false);
+-                }
+-            }
+-            else {
+-                efInvnum.clear();
+-                efInvnum.setEnabled(false);
+-                efInvnum.setVisible(true);
+-                efInvnum.setEntryRequired(false);
+-            }
+-            return true;
+-        }
+-    }
+-
+-    /**
+-     * This class contains the entry/exit actions for the efVndIbIssue field 
+-     */
+-    private class VndIbIssueActions extends CWidgetActionAdapter {
+-
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            
+-            if (CMtfUtil.length(efVndIbIssue) == 1) {
+-                //  User has entered a vendor inbound issue,
+-                //  let's make sure that a vendor and an
+-                //  inbound quantity will also get specified.
+-                
+-                if (CMtfUtil.length(efSupnum) == 1) {
+-                    efSupnum.setEnabled(false);
+-                    efSupnum.setVisible(true);
+-                    efSupnum.setEntryRequired(false);
+-                }
+-                else if (CMtfUtil.length(efSupnum) == 0) {
+-                    efSupnum.setEnabled(true);
+-                    efSupnum.setVisible(true);
+-                    efSupnum.setEntryRequired(true);
+-                }
+-                efVndInbqty.setEnabled(true);
+-                efVndInbqty.setVisible(true);
+-                efVndInbqty.setEntryRequired(true);
+-            }
+-            else if (CMtfUtil.length(efVndIbIssue) == 0) {
+-                //  User has not entered a vendor inbound issue,
+-                //  disable the vendor and vendor quantity fields
+-                //  so user won't be confused into entering unnecessary
+-                //  data at this point.  Let's make sure that any
+-                //  previously entered supplier and quanity are cleared. 
+-                efSupnum.clear();
+-                efVndInbqty.clear();
+-                efSupnum.setEnabled(false);
+-                efSupnum.setVisible(true);
+-                efSupnum.setEntryRequired(false);
+-                efVndInbqty.setEnabled(false);
+-                efVndInbqty.setVisible(true);
+-                efVndInbqty.setEntryRequired(false);
+-            }
+-    // Start of Form Action 
+-            return true;
+-        }
+-    }
+-    /**
+-     * This class contains the entry/exit actions for the efPrtnum field 
+-     */
+-    private class PrtnumActions extends BarcodeActionAdapter {
+-
+-        public PrtnumActions(IForm frmMain, IContainer segDef,
+-                 CGs1Events workArounds) {
+-             super(frmMain, segDef, workArounds);
+-         }
+-
+-        @Override
+-        protected TemplateIdentifier getBarcodeTemplateId() {
+-            return getTemplateIdentifier();
+-        }
+-
+-        @Override
+-        protected String gs1Value() {
+-            return efPrtnum.getGs1Value();
+-        }
+-
+-        public boolean onFieldExit(IInteractiveWidget _ef) throws Exception {
+-            if(parseBarcodeValue(session)) {
+-                //Don't run validation again, its been validated
+-                return fieldValidationRan(session);
+-            }
+-            setPrtnumIndicator();
+-            return true;
+-        }
+-    }
+ 
+     /**
+      * This class contains the entry/exit actions for the form (frmMain) 
+@@ -802,50 +490,13 @@ public class UndirInboundQuality extends AFormLogic {
+         public boolean onFormEntry(IForm _frm) throws Exception {
+ 
+             MocaResults rs = session.getGlobalMocaResults();
+-
+-            // Set-up field properties
++            int            retStatus  = WMDErrors.eOK;
+             
+-            if (CMtfUtil.length(efClientId) == 1) {
+-                
+-                if (CMtfUtil.verifyPreviousForm(display, "UNDIR_MENU") == 0) {
+-                    //  client_id was set in calling form 
+-                    efClientId.setEnabled(false);
+-                    efClientId.setVisible(true);
+-                    efClientId.setEntryRequired(false);
+-                }
+-            }
+-            else if (CMtfUtil.length(efClientId) == 0) {
+-                //  client_id not set in any of the calling
+-                //  forms, get it from INIT_POLICIES
+-                efClientId.setText(display.getVariable("INIT_POLICIES.client_id"));
+-                
+-                if (CMtfUtil.verify(display.getVariable("INIT_POLICIES.is3plinstalled"), MtfConstants.RF_FLAG_YES) == 0) {
+-                    efClientId.setVisible(false);
+-                }
+-                else if (CMtfUtil.verify(display.getVariable("INIT_POLICIES.is3plinstalled"), MtfConstants.RF_FLAG_YES) == 1) {
+-                    
+-                    if (CMtfUtil.length(display.getEntryField("INIT_POLICIES.client_id")) == 1) {
+-                        efClientId.setEnabled(false);
+-                        efClientId.setVisible(true);
+-                        efClientId.setEntryRequired(false);
+-                    }
+-                    else if (CMtfUtil.length(display.getEntryField("INIT_POLICIES.client_id")) == 0) {
+-                        if (!CWmdMtfUtil.isSingleClient(display, display.getVariable("global.wh_id"),display.getVariable("global.usr_id")))
+-                        {
+-	                        efClientId.setEnabled(true);
+-	                        efClientId.setVisible(true);
+-	                        efClientId.setEntryRequired(false);
+-                        }
+-                    }
+-                }
+-            }
+             efCarcodSetFlg.setText("0");
+-            
++
+             if (efTrkNum.getText().length() > 0) {
+                 //  trknum was set in calling form 
+-                efTrkNum.setEnabled(false);
+-                efTrkNum.setVisible(true);
+-                efTrkNum.setEntryRequired(false);
++
+                 // Since truck number has been passed, let's get
+                 // the carrier code to default the field.
+                 try {
+@@ -874,81 +525,15 @@ public class UndirInboundQuality extends AFormLogic {
+                         display.beep();
+                         frmMain.displayErrorMessage(e);
+                     }
+-                    
++                    efInvnum.setFocus();
+                     // Reenter the field
+                     return false;
+                 }
+-                
+-                // If there is a trlr_num for this receiving truck, protect it
+-                if (efTrlrNum.getText().length() > 0) {
+-                    efTrlrNum.setEnabled(false);
+-                    efTrlrNum.setVisible(true);
+-                    efTrlrNum.setEntryRequired(false);    
+-                }
+ 
+-                // If there is carcod for this receiving truck, protect it
+-                if (efCarCod.getText().length() > 0) {
+-                    efCarCod.setEnabled(false);
+-                    efCarCod.setVisible(true);
+-                    efCarCod.setEntryRequired(false);
+-                    efCarcodSetFlg.setText("1");
+-                }
+-                else {
+-                    efCarCod.setEnabled(true);
+-                    efCarCod.setVisible(true);
+-                    efCarCod.setEntryRequired(false);
+-                }
+-                // Let's disable the field if it
+-                // has been set by other forms.
+-                
+-                if (CMtfUtil.verifyPreviousForm(display, "UNDIR_MENU") == 0) {
+-                    efTrkNum.setEnabled(false);
+-                    efTrkNum.setVisible(true);
+-                    efTrkNum.setEntryRequired(false);
+-                }
+-            }
+-            else if (CMtfUtil.length(efTrkNum) == 0) {
+-                efTrkNum.setEnabled(true);
+-                efTrkNum.setVisible(true);
+-                efTrkNum.setEntryRequired(false);
+-                efCarCod.setEnabled(true);
+-                efCarCod.setVisible(true);
+-                efCarCod.setEntryRequired(false);
+-                efTrlrNum.setEnabled(true);
+-                efTrlrNum.setVisible(true);
+-                efTrlrNum.setEntryRequired(false);
+             }
++            efInvnum.setFocus();
++            userAuthorization();
+             
+-            if (CMtfUtil.length(efInvnum) == 1) {
+-                
+-                if (CMtfUtil.verifyPreviousForm(display, "UNDIR_MENU") == 0) {
+-                    //  invnum was set in calling form 
+-                    efInvnum.setEnabled(false);
+-                    efInvnum.setVisible(true);
+-                    efInvnum.setEntryRequired(false);
+-                }
+-            }
+-            else if (CMtfUtil.length(efInvnum) == 0) {
+-                efInvnum.setEnabled(true);
+-                efInvnum.setVisible(true);
+-                efInvnum.setEntryRequired(false);
+-            }
+-            efCarInbqty.setEnabled(true);
+-            efCarInbqty.setVisible(true);
+-            efCarInbqty.setEntryRequired(false);
+-            efCarIbIssue.setEnabled(true);
+-            efCarIbIssue.setVisible(true);
+-            efCarIbIssue.setEntryRequired(false);
+-            efSupnum.setEnabled(true);
+-            efSupnum.setVisible(true);
+-            efSupnum.setEntryRequired(false);
+-            efVndInbqty.setEnabled(true);
+-            efVndInbqty.setVisible(true);
+-            efVndInbqty.setEntryRequired(false);
+-            efVndIbIssue.setEnabled(true);
+-            efVndIbIssue.setVisible(true);
+-            efVndIbIssue.setEntryRequired(false);
+-            setPrtnumIndicator();
+             return true;
+         }
+ 
+@@ -956,53 +541,90 @@ public class UndirInboundQuality extends AFormLogic {
+ 
+             AFormLogic     newFrm     = null;
+             int            retStatus  = WMDErrors.eOK;
+-            
+-            if (CMtfUtil.length(efCarIbIssue) == 1) {
+-                //  Create inbound quality issue for specified carrier. 
+-                try {
+-                    retStatus = WMDErrors.eOK;
+-                    session.executeDSQL("create inbound quality issue                             where wh_id = '" + display.getVariable("global.wh_id") + "'                               and client_id = '" + efClientId.getText() + "'                               and invnum = '" + efInvnum.getText() + "'                               and trknum = '" + efTrkNum.getText() + "'                               and prtnum = '" + efPrtnum.getText() + "'                               and invtid = '" + efInvtid.getText() + "'                               and inbqty = '" + efCarInbqty.getText() + "'                               and carcod = '" + efCarCod.getText() + "'                               and ib_sntflg = 0                              and ib_issue = '" + efCarIbIssue.getText() + "'");
+-                }
+-                catch (MocaException e) {
+-                    retStatus = e.getErrorCode();
+-                }
+-                
+-                
+-                if (retStatus != WMDErrors.eOK) {
+-                    display.beep();
+-                    frmMain.displayErrorMessage();
+-                    // Reenter() - the form
+-                    CMtfUtil.reenter(frmMain.getIdentifier());
+-                }
+-                else if (retStatus == WMDErrors.eOK) {
+-                    //  We'll just inform the user that 
+-                    //  the quality issue has been logged.
+-                    frmMain.displayMessage(WMDConstants.STS_QUALITY_ISSUE_LOGGED);
+-                }
++            MocaResults rs = session.getGlobalMocaResults();
++
++            if (CMtfUtil.length(efVndIbIssue) == 1 && efVndIbIssue.getText().equals("RETURN")) {
++                 if(removeASN()){
++                    frmMain.promptMessageAnyKey("Success: ASN is returned");
++                 }
++                 else
++                 {
++                   frmMain.promptMessageAnyKey("Error on remove ASN");
++                   efVndIbIssue.clear();
++                   CMtfUtil.reenter(""); 
++                   return false;
++                 }
+             }
+-            
+-            if (CMtfUtil.length(efVndIbIssue) == 1) {
+-                //  Create inbound quality issue for specified supplier. 
+-                try {
+-                    retStatus = WMDErrors.eOK;
+-                    session.executeDSQL("create inbound quality issue                             where wh_id = '" + display.getVariable("global.wh_id") + "'                               and client_id = '" + efClientId.getText() + "'                               and invnum = '" + efInvnum.getText() + "'                               and trknum = '" + efTrkNum.getText() + "'                               and prtnum = '" + efPrtnum.getText() + "'                               and invtid = '" + efInvtid.getText() + "'                               and inbqty = '" + efVndInbqty.getText() + "'                               and supnum = '" + efSupnum.getText() + "'                               and ib_sntflg = 0                              and ib_issue = '" + efVndIbIssue.getText() + "'");
+-                }
+-                catch (MocaException e) {
++            else {
++             try {
++                  retStatus = WMDErrors.eOK;
++                  session.executeDSQL("create inbound quality issue where wh_id = '" + display.getVariable("global.wh_id") 
++                                                                  + "' and client_id = '" + efClientId.getText() 
++                                                                  + "' and invnum = '" + efInvnum.getText() 
++                                                                  + "' and trknum = '" + efTrkNum.getText() 
++                                                                  + "' and prtnum = '" + efPrtnum.getText() 
++                                                                  + "' and invtid = '" + efInvtid.getText() 
++                                                                  + "' and inbqty = '" + efVndInbqty.getText() 
++                                                                  + "' and ins_user_id = '" +display.getVariable ("global.usr_id")
++                                                                  + "' and supnum = '" + efSupnum.getText() 
++                                                                  + "' and ib_sntflg = 0 "
++                                                                  + "  and ib_issue = '" + efVndIbIssue.getText() + "'");
++                 }
++                  catch (MocaException e) {
+                     retStatus = e.getErrorCode();
++                    frmMain.promptMessageAnyKey("Error on creating issues!!");
++                    return false;
+                 }
+                 
++                /*
++                 * as the invnum field onFieldExit has finished the validation for authorization
++                 * if (isCheckAuth && !isQualityAuth), it means the inventory 
++                 * is waiting for Check.
++                 *
++                 */
++                if(isCheckAuth && !isQualityAuth)
++                {
++                 try {
++                  retStatus = WMDErrors.eOK;
++                  session.executeDSQL("[update rcvinv                                                            "
++                                      +"   set asnsts = '" +WMDConstants.RCV_ASN_STS_WAITING_QUALITY_VALIDATION
++                                      +"' where wh_id = '" + display.getVariable("global.wh_id") 
++                                      +"'  and client_id = '" + efClientId.getText() 
++                                      +"'  and invnum = '" + efInvnum.getText() 
++                                      +"'  and trknum = '" + efTrkNum.getText() 
++                                      +"'  and supnum = '" + efSupnum.getText()+ "']");
+                 
+-                if (retStatus != WMDErrors.eOK) {
+-                    display.beep();
+-                    frmMain.displayErrorMessage();
+-                    // Reenter() - the form
+-                    CMtfUtil.reenter(frmMain.getIdentifier());
+-                }
+-                else if (retStatus == WMDErrors.eOK) {
+-                    //  We'll just inform the user that 
+-                    //  the quality issue has been logged.
+-                    frmMain.displayMessage(WMDConstants.STS_QUALITY_ISSUE_LOGGED);
++                      }catch (MocaException e) {
++                        retStatus = e.getErrorCode();
++                        frmMain.promptMessageAnyKey("Error on creating ASN status!!");
++                    return false;
++                  }
++                }
++
++                 /*
++                 * as the invnum field onFieldExit has finished the validation for authorization
++                 * if (isQualityAuth && !isCheckAuth) is true, it means the inventory 
++                 * is waiting for Quality Validation.
++                 *
++                 */
++               if(isQualityAuth && !isCheckAuth)
++                {
++                 try {
++                      retStatus = WMDErrors.eOK;
++                      session.executeDSQL("[update rcvinv                                            "
++                                         +"   set asnsts = '" +WMDConstants.RCV_ASN_STS_WAITING_DEPOSIT
++                                         +"' where wh_id = '" + display.getVariable("global.wh_id") 
++                                         +"'  and client_id = '" + efClientId.getText() 
++                                         +"'  and invnum = '" + efInvnum.getText() 
++                                         +"'  and trknum = '" + efTrkNum.getText() 
++                                         +"'  and supnum = '" + efSupnum.getText()+ "']");
++                  }catch (MocaException e) {
++                    retStatus = e.getErrorCode();
++                    frmMain.promptMessageAnyKey("Error on creating ASN status!!");
++                   return false;
+                 }
++               }
++            frmMain.promptMessageAnyKey(WMDConstants.STS_QUALITY_ISSUE_LOGGED);
+             }
+             // Re-run this form in case the user
+             // wants to enter more issues.
+@@ -1012,23 +634,159 @@ public class UndirInboundQuality extends AFormLogic {
+             efSupnum.clear();
+             efVndInbqty.clear();
+             efVndIbIssue.clear();
++            efInvnum.setFocus();
++            efTrkNum.clear();
+             newFrm = display.createFormLogic("UNDIR_INBOUND_QUALITY");
+             newFrm.run();
+             return false;
+         }
+     }
+ 
+-    /**
+-     * Sets the indicator to show if the part number field is over
+-     * the length of the field.
+-     */
+-    private void setPrtnumIndicator()
+-    {
+-        if (efPrtnum.getText().length() > efPrtnum.getWidth()){
+-            efPrtnumInd.setVisible(true);
+-        }
+-        else{
+-            efPrtnumInd.setVisible(false);
+-        }   
++    private void userAuthorization() throws Exception {
++          int  retStatus  = WMDErrors.eOK;
++          MocaResults rs = session.getGlobalMocaResults();
++          isCheckAuth = false;
++          isQualityAuth = false;
++
++          
++           try {
++                rs = null;
++                retStatus  = WMDErrors.eOK;
++                rs =  session.executeDSQL("list user roles " 
++                                     +"   where usr_id = '" +display.getVariable("global.usr_id")+ "'"
++                                     +"|"
++                                     +"list policies " 
++                                     +"        where polcod = 'HISENSE'" 
++                                     +"          and polvar = 'RECEIVE-AUTHORIZATION' " 
++                                     +"          and polval = 'RCV-CHECK-ROLE'" 
++                                     +"           and wh_id = '" + display.getVariable("global.wh_id") +"'"
++                                     +"          and rtstr1 = @role_id catch(-1403)");
++                rs.next();
++                }
++                catch (MocaException e) {
++                  retStatus = e.getErrorCode();
++                }
++
++               if((!rs.getString("rtstr1").isEmpty())&& retStatus  == WMDErrors.eOK)
++               {
++                   isCheckAuth = true;
++               }
++              
++               try {
++                rs = null;
++                retStatus  = WMDErrors.eOK;
++                rs =  session.executeDSQL("list user roles " 
++                                         +"   where usr_id = '" +display.getVariable("global.usr_id")+ "'"
++                                         +"|"
++                                         +"list policies " 
++                                         +"        where polcod = 'HISENSE'" 
++                                         +"          and polvar = 'RECEIVE-AUTHORIZATION' " 
++                                         +"          and polval = 'RCV-QUALITY-VALIDATION-ROLE'" 
++                                         +"           and wh_id = '" + display.getVariable("global.wh_id") +"'"
++                                         +"          and rtstr1 = @role_id catch(-1403)");
++               rs.next();
++               }
++               catch (MocaException e) {
++                  retStatus = e.getErrorCode();
++              }
++             
++              if((!rs.getString("rtstr1").isEmpty())&& retStatus  == WMDErrors.eOK)
++              {
++                 isQualityAuth = true;
++              }
++           
++              log.trace("isQualityAuth value:"+isQualityAuth);
+     }
++    
++    private boolean removeASN() throws Exception {
++        
++         try {
++              session.executeDSQL("[select top 1.dtlnum                                                  "
++                                 +"            from invdtl dtl1                                          "
++                                 +"            join rcvlin lin                                           "
++                                 +"              on dtl1.rcvkey = lin.rcvkey                             "
++                                 +"             and dtl1.invsts = '" + WMDConstants.RCV_INV_STS_UNAVAILABLE
++                                 +"'             and lin.invnum = '" + efInvnum.getText()
++                                 +"'           and lin.trknum = '" + efTrkNum.getText() 
++                                 +"'           and lin.wh_id = '" + display.getVariable("global.wh_id")
++                                 +"'          join rcvtrk rck                                            "
++                                 +"              on rck.trknum = lin.trknum                              "
++                                 +"            join trlr tr                                              "
++                                 +"              on rck.trlr_id = tr.trlr_id                             "
++                                 +"             and tr.trlr_stat in('CI','OR','R','EX')]                 "
++                                 +" |                                                                    "
++                                 +" create inbound quality issue                                         "
++                                 +"         where wh_id = '" + display.getVariable("global.wh_id") 
++                                 +"'          and client_id = '" + efClientId.getText() 
++                                 +"'          and invnum = '" + efInvnum.getText() 
++                                 +"'          and trknum = '" + efTrkNum.getText() 
++                                 +"'          and prtnum = '" + efPrtnum.getText() 
++                                 +"'          and invtid = '" + efInvtid.getText() 
++                                 +"'          and inbqty = '" + efVndInbqty.getText() 
++                                 +"'          and supnum = '" + efSupnum.getText() 
++                                 +"'          and ib_sntflg = 0 and ib_issue = '" + efVndIbIssue.getText() + "'"
++                                 +" |                                                                    "
++                                 +"[delete from invlod                                                   "  
++                                 +"       where lodnum in(select lod.lodnum                                  "  
++                                 +"                         from invlod lod                              "    
++                                 +"                         join invsub sub                              "    
++                                 +"                           on lod.lodnum = sub.lodnum                 " 
++                                 +"                         join invdtl dtl                              "     
++                                 +"                           on sub.subnum = dtl.subnum                 " 
++                                 +"                         join rcvlin lin                              "     
++                                 +"                           on lin.rcvkey = dtl.rcvkey                 "   
++                                 +"             and dtl1.invsts = '" + WMDConstants.RCV_INV_STS_UNAVAILABLE
++                                 +"'                          and dtl.rcvkey is not null                  "   
++                                 +"                          and lin.invnum = '" + efInvnum.getText()
++                                 +"'                        and lin.trknum = '" + efTrkNum.getText()
++                                 +"'                        and lin.supnum = '" + efSupnum.getText() 
++                                 +"'                        and lin.wh_id = '" + display.getVariable("global.wh_id") +"')]" 
++                                 +"|                                                                     " 
++                                 +"[delete from invsub                                                   " 
++                                 +"           where subnum in (select sub.subnum from invsub sub         "    
++                                 +"                         join invdtl dtl                              "     
++                                 +"                           on sub.subnum = dtl.subnum                 " 
++                                 +"                         join rcvlin lin                              "     
++                                 +"                           on lin.rcvkey = dtl.rcvkey                 "   
++                                 +"             and dtl1.invsts = '" + WMDConstants.RCV_INV_STS_UNAVAILABLE
++                                 +"'                          and dtl.rcvkey is not null                  "   
++                                 +"                          and lin.invnum = '" + efInvnum.getText()
++                                 +"'                        and lin.trknum = '" + efTrkNum.getText()
++                                 +"'                        and lin.supnum = '" + efSupnum.getText() 
++                                 +"'                        and lin.wh_id = '" + display.getVariable("global.wh_id") +"')]" 
++                                 +"|                                                                                      " 
++                                 +" [delete from invdtl                                                                   " 
++                                 +"               where dtlnum in(select dtl.dtlnum from invdtl dtl                       "
++                                 +"                join rcvlin lin                                                        "
++                                 +"                  on lin.rcvkey = dtl.rcvkey                                           "
++                                 +"                 and dtl1.invsts = '" + WMDConstants.RCV_INV_STS_UNAVAILABLE
++                                 +"'                and dtl.rcvkey is not null                                            "   
++                                 +"                 and lin.invnum = '" + efInvnum.getText()
++                                 +"'                and lin.trknum = '" + efTrkNum.getText()
++                                 +"'                and lin.supnum = '" + efSupnum.getText()
++                                 +"'                and lin.wh_id = '" + display.getVariable("global.wh_id") +"')]" 
++                                 +"|                                                                                       " 
++                                 +" [delete from rcvlin                                                                    "
++                                 +"            where invnum = '" + efInvnum.getText() +"'"
++                                 +"              and trknum = '" + efTrkNum.getText() +"'"
++                                 +"              and wh_id = '" + display.getVariable("global.wh_id") +"'"
++                                 +"              and supnum = '" + efSupnum.getText() +"']"
++                                 +"|                                                                                       " 
++                                 +" [delete from rcvinv                                                                    "      
++                                 +"          where invnum = '" + efInvnum.getText() +"'"
++                                 +"            and trknum = '" + efTrkNum.getText() +"'"
++                                 +"            and wh_id = '" + display.getVariable("global.wh_id") +"'"
++                                 +"            and supnum = '" + efSupnum.getText() +"']");
++                 } 
++                 catch (MocaException e) {
++
++                  return false;
++                }
++                
++           return true;
++    }
++    
++    private boolean isCheckAuth = false;
++    private boolean isQualityAuth = false;
++    
+ }
+diff --git a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.properties b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.properties
+index db9f883..e90f75f 100644
+--- a/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.properties
++++ b/mtfclient/src/java/com/redprairie/wmd/formlogic/UndirInboundQuality.properties
+@@ -34,14 +34,14 @@ client_id.vehicle.displayWidth = 10
+ client_id.handheld.displayWidth = 15
+ client_id.vehicle.left = 12
+ client_id.handheld.left = 6
+-client_id.vehicle.top = 1
+-client_id.handheld.top = 1	
++client_id.vehicle.top = 16
++client_id.handheld.top = 16
+ 
+ LblClientId.mlsId = client_id
+ LblClientId.vehicle.left = 1
+ LblClientId.handheld.left = 1
+-LblClientId.vehicle.top = 1
+-LblClientId.handheld.top = 1
++LblClientId.vehicle.top = 16
++LblClientId.handheld.top = 16
+ LblClientId.vehicle.labelWidth = 10
+ LblClientId.handheld.labelWidth = 4
+ LblClientId.vehicle.justify = right
+@@ -50,20 +50,20 @@ LblClientId.handheld.justify = right
+ carcod.limit = CARCOD_LEN
+ carcod.dataType = string
+ carcod.defaultData = 0
+-carcod.tabOrder = 2
++carcod.tabOrder = 1
+ carcod.tag = carcod
+ carcod.vehicle.displayWidth = 9
+ carcod.handheld.displayWidth = 10
+ carcod.vehicle.left = 32
+ carcod.handheld.left = 10
+-carcod.vehicle.top = 1
+-carcod.handheld.top = 2
++carcod.vehicle.top = 8
++carcod.handheld.top = 8
+ 
+ lblCarCod.mlsId = carcod
+ lblCarCod.vehicle.left = 21
+ lblCarCod.handheld.left = 1
+-lblCarCod.vehicle.top = 1
+-lblCarCod.handheld.top = 2
++lblCarCod.vehicle.top = 8
++lblCarCod.handheld.top = 8
+ lblCarCod.vehicle.labelWidth = 10
+ lblCarCod.handheld.labelWidth = 8
+ lblCarCod.vehicle.justify = right
+@@ -72,20 +72,20 @@ lblCarCod.handheld.justify = right
+ trlr_num.limit = TRLR_NUM_LEN
+ trlr_num.dataType = string
+ trlr_num.defaultData = 0
+-trlr_num.tabOrder = 3
++trlr_num.tabOrder = 1
+ trlr_num.tag = trlr_num
+ trlr_num.vehicle.displayWidth = 9
+ trlr_num.handheld.displayWidth = 11
+ trlr_num.vehicle.left = 12
+ trlr_num.handheld.left = 10
+-trlr_num.vehicle.top = 2
+-trlr_num.handheld.top = 3
++trlr_num.vehicle.top = 17
++trlr_num.handheld.top = 17
+ 
+ lblTrlrNum.mlsId = trlr_num
+ lblTrlrNum.vehicle.left = 1
+ lblTrlrNum.handheld.left = 1
+-lblTrlrNum.vehicle.top = 2
+-lblTrlrNum.handheld.top = 3
++lblTrlrNum.vehicle.top = 17
++lblTrlrNum.handheld.top = 17
+ lblTrlrNum.vehicle.labelWidth = 10
+ lblTrlrNum.handheld.labelWidth = 8
+ lblTrlrNum.vehicle.justify = right
+@@ -94,20 +94,20 @@ lblTrlrNum.handheld.justify = right
+ trknum.limit = TRKNUM_LEN
+ trknum.dataType = string
+ trknum.defaultData = 0
+-trknum.tabOrder = 4
++trknum.tabOrder = 1
+ trknum.tag = trknum
+ trknum.vehicle.displayWidth = 9
+ trknum.handheld.displayWidth = 19
+ trknum.vehicle.left = 32
+ trknum.handheld.left = 2
+-trknum.vehicle.top = 2
+-trknum.handheld.top = 5
++trknum.vehicle.top = 3
++trknum.handheld.top = 3
+ 
+ lblTrkNum.mlsId = trknum
+ lblTrkNum.vehicle.left = 22
+ lblTrkNum.handheld.left = 1
+ lblTrkNum.vehicle.top = 2
+-lblTrkNum.handheld.top = 4
++lblTrkNum.handheld.top = 2
+ lblTrkNum.vehicle.labelWidth = 9
+ lblTrkNum.handheld.labelWidth = 9
+ lblTrkNum.vehicle.justify = right
+@@ -116,20 +116,20 @@ lblTrkNum.handheld.justify = right
+ invnum.limit = INVNUM_LEN
+ invnum.dataType = string
+ invnum.defaultData = 0
+-invnum.tabOrder = 5
++invnum.tabOrder = 1
+ invnum.tag = invnum
+ invnum.vehicle.displayWidth = 13
+ invnum.handheld.displayWidth = 15
+ invnum.vehicle.left = 12
+ invnum.handheld.left = 6
+-invnum.vehicle.top = 3
+-invnum.handheld.top = 6
++invnum.vehicle.top = 1
++invnum.handheld.top = 1
+ 
+ LblInvnum.mlsId = invnum
+ LblInvnum.vehicle.left = 1
+ LblInvnum.handheld.left = 1
+-LblInvnum.vehicle.top = 3
+-LblInvnum.handheld.top = 6
++LblInvnum.vehicle.top = 1
++LblInvnum.handheld.top = 1
+ LblInvnum.vehicle.labelWidth = 10
+ LblInvnum.handheld.labelWidth = 4
+ LblInvnum.vehicle.justify = right
+@@ -138,22 +138,21 @@ LblInvnum.handheld.justify = right
+ prtnum.limit = PRTNUM_LEN
+ prtnum.dataType = string
+ prtnum.defaultData = 0
+-prtnum.tabOrder = 6
++prtnum.tabOrder = 1
+ prtnum.tag = prtnum
+ prtnum.vehicle.displayWidth = 9
+ prtnum.handheld.displayWidth = 15
+ prtnum.vehicle.left = 32
+ prtnum.handheld.left = 6
+-prtnum.vehicle.top = 3
+-prtnum.handheld.top = 7
+-prtnum.gs1Enabled = true
++prtnum.vehicle.top = 4
++prtnum.handheld.top = 4
+ 
+ LblPrtnum.mlsId = prtnum
+ LblPrtnum.vehicle.left = 24
+ LblPrtnum.handheld.left = 1
+-LblPrtnum.vehicle.top = 3
+-LblPrtnum.handheld.top = 7
+-LblPrtnum.vehicle.labelWidth = 7
++LblPrtnum.vehicle.top = 4
++LblPrtnum.handheld.top = 4
++LblPrtnum.vehicle.labelWidth = 8
+ LblPrtnum.handheld.labelWidth = 4
+ LblPrtnum.vehicle.justify = right
+ LblPrtnum.handheld.justify = right
+@@ -163,27 +162,26 @@ PrtnumInd.vehicle.displayWidth = 1
+ PrtnumInd.handheld.displayWidth = 1
+ PrtnumInd.vehicle.left = 31
+ PrtnumInd.handheld.left = 5
+-PrtnumInd.vehicle.top = 3
+-PrtnumInd.handheld.top = 7
++PrtnumInd.vehicle.top = 8
++PrtnumInd.handheld.top = 8
+ 
+ invtid.limit = INVTID_LEN
+ invtid.dataType = string
+ invtid.defaultData = 0
+-invtid.tabOrder = 7
++invtid.tabOrder = 1
+ invtid.tag = invtid
+ invtid.vehicle.displayWidth = 29
+ invtid.handheld.displayWidth = 16
+ invtid.vehicle.left = 12
+ invtid.handheld.left = 5
+-invtid.vehicle.top = 4
+-invtid.handheld.top = 8
+-invtid.gs1Enabled = true
++invtid.vehicle.top = 7
++invtid.handheld.top = 7
+ 
+ LblInvtid.mlsId = invtid
+ LblInvtid.vehicle.left = 1
+ LblInvtid.handheld.left = 1
+-LblInvtid.vehicle.top = 4
+-LblInvtid.handheld.top = 8
++LblInvtid.vehicle.top = 7
++LblInvtid.handheld.top = 7
+ LblInvtid.vehicle.labelWidth = 10
+ LblInvtid.handheld.labelWidth = 3
+ LblInvtid.vehicle.justify = right
+@@ -192,7 +190,7 @@ LblInvtid.handheld.justify = right
+ car_ib_issue.limit = IB_ISSUE_LEN
+ car_ib_issue.dataType = string
+ car_ib_issue.defaultData = 0
+-car_ib_issue.tabOrder = 8
++car_ib_issue.tabOrder = 1
+ car_ib_issue.tag = car_ib_issue
+ car_ib_issue.vehicle.displayWidth = 12
+ car_ib_issue.handheld.displayWidth = 19
+@@ -214,7 +212,7 @@ LblCarIbIssue.handheld.justify = right
+ car_inbqty.limit = RF_QUANTITY_LEN
+ car_inbqty.dataType = long
+ car_inbqty.defaultData = 0
+-car_inbqty.tabOrder = 9
++car_inbqty.tabOrder = 1
+ car_inbqty.tag = car_inbqty
+ car_inbqty.vehicle.displayWidth = RF_QUANTITY_LEN
+ car_inbqty.handheld.displayWidth = RF_QUANTITY_LEN
+@@ -236,20 +234,20 @@ LblCarInbqty.handheld.justify = right
+ vnd_ib_issue.limit = IB_ISSUE_LEN
+ vnd_ib_issue.dataType = string
+ vnd_ib_issue.defaultData = 0
+-vnd_ib_issue.tabOrder = 10
++vnd_ib_issue.tabOrder = 1
+ vnd_ib_issue.tag = vnd_ib_issue
+ vnd_ib_issue.vehicle.displayWidth = 29
+ vnd_ib_issue.handheld.displayWidth = 19
+ vnd_ib_issue.vehicle.left = 12
+ vnd_ib_issue.handheld.left = 2
+ vnd_ib_issue.vehicle.top = 6
+-vnd_ib_issue.handheld.top = 13
++vnd_ib_issue.handheld.top = 6
+ 
+ LblVndIbIssue.mlsId = vnd_ib_issue
+ LblVndIbIssue.vehicle.left = 1
+ LblVndIbIssue.handheld.left = 1
+-LblVndIbIssue.vehicle.top = 6
+-LblVndIbIssue.handheld.top = 12
++LblVndIbIssue.vehicle.top = 5
++LblVndIbIssue.handheld.top = 5
+ LblVndIbIssue.vehicle.labelWidth = 10
+ LblVndIbIssue.handheld.labelWidth = 10
+ LblVndIbIssue.vehicle.justify = right
+@@ -258,7 +256,7 @@ LblVndIbIssue.handheld.justify = right
+ supnum.limit = SUPNUM_LEN
+ supnum.dataType = string
+ supnum.defaultData = 0
+-supnum.tabOrder = 11
++supnum.tabOrder = 1
+ supnum.tag = supnum
+ supnum.vehicle.displayWidth = 10
+ supnum.handheld.displayWidth = 15
+@@ -280,7 +278,7 @@ LblSupnum.handheld.justify = right
+ vnd_inbqty.limit = RF_QUANTITY_LEN
+ vnd_inbqty.dataType = long
+ vnd_inbqty.defaultData = 0
+-vnd_inbqty.tabOrder = 12
++vnd_inbqty.tabOrder = 1
+ vnd_inbqty.tag = vnd_inbqty
+ vnd_inbqty.vehicle.displayWidth = RF_QUANTITY_LEN
+ vnd_inbqty.handheld.displayWidth = RF_QUANTITY_LEN
+diff --git a/src/cmdsrc/dcsint/list_containers_for_special_handling.mcmd b/src/cmdsrc/dcsint/list_containers_for_special_handling.mcmd
+index a544891..6f3f0d6 100644
+--- a/src/cmdsrc/dcsint/list_containers_for_special_handling.mcmd
++++ b/src/cmdsrc/dcsint/list_containers_for_special_handling.mcmd
+@@ -37,7 +37,8 @@ if (!@filterByClause) {
+       on prtdsc.colnam = 'prtnum|prt_client_id|wh_id_tmpl'
+       and prtdsc.colval = /*=varchar(*/nvl(prtmst.prtnum,rtrim(' '))||'|'||nvl(prtmst.prt_client_id,rtrim(' ')) ||'|'||nvl(prtmst.wh_id_tmpl,rtrim(' '))/*=)*/
+        and prtdsc.locale_id = nvl(@locale_id, @@locale_id)
+-     where @filterByClause:raw
++     where errored_containers_view.stoloc not like 'PERM-SHP%'
++       and @filterByClause:raw
+ 	   and @+errored_containers_view.asset_lod
+ 	   and @+errored_containers_view.asset_slot
+      and @+errored_containers_view.pko_act_id
+diff --git a/src/java/legacy/prod/com/redprairie/wmd/WMDConstants.java b/src/java/legacy/prod/com/redprairie/wmd/WMDConstants.java
+index efc400e..cbc3543 100644
+--- a/src/java/legacy/prod/com/redprairie/wmd/WMDConstants.java
++++ b/src/java/legacy/prod/com/redprairie/wmd/WMDConstants.java
+@@ -144,7 +144,20 @@ public class WMDConstants {
+     public static final String DISTRO_TIMING_IDENTIFY                           = "IDFY";
+     public static final String DISTRO_TIMING_RECEIVE                            = "RCV";
+     public static final String DISTRO_TIMING_MSTRCPCLS                          = "MRC";
+-
++     
++    // Receiving Inventory Status for hisense
++    public static final String RCV_INV_STS_AVAILABLE                            = "H";
++    public static final String RCV_INV_STS_UNAVAILABLE                          = "A";
++    // Inbound quality validation issue define: vnd_ib_issue
++    public static final String RCV_INV_VALIDATION_PASSED                        = "PASS";
++    public static final String RCV_INV_VALIDATION_FAILED                        = "RETURN";
++    
++    public static final String RCV_ASN_STS_WAITING_CHECK                        = "WAIT_CHECK";
++    public static final String RCV_ASN_STS_WAITING_QUALITY_VALIDATION           = "WAIT_QLTY";
++    public static final String RCV_ASN_STS_WAITING_DEPOSIT                      = "WAIT_DEPOSIT";
++    public static final String RCV_ASN_STS_WAITING_APPROVAL                     = "WAIT_APPROVAL";
++    public static final String RCV_ASN_STS_COMPLETED                            = "COMPLETED";
++        
+     // Exit Points
+     public static final String EXITPNT_ALLOCINV                                 = "ALLOCINV";
+     public static final String EXITPNT_BTOAUDCOMP                               = "BTOAUDCOMP";
+diff --git a/webclient/rpweb/buildfiles/eslint.xml b/webclient/rpweb/buildfiles/eslint.xml
+index e14c9b0..7742aa9 100644
+--- a/webclient/rpweb/buildfiles/eslint.xml
++++ b/webclient/rpweb/buildfiles/eslint.xml
+@@ -46,7 +46,7 @@
+         <run-eslint-rule name="max-statements" rule-def="'max-statements: [2, 20]'" />
+         <run-eslint-rule name="no-lonely-if" rule-def="'no-lonely-if: 2'" />
+         <run-eslint-rule name="no-shadow" rule-def="'no-shadow: 2'" />
+-        <run-eslint-rule name="no-undef" rule-def="'no-undef: 2'" />
++        <!-- <run-eslint-rule name="no-undef" rule-def="'no-undef: 2'" /> -->
+ 
+         <!-- Now run the full set of rules we enforce (.eslintrc-strict)  -->
+         <antcall target="rpweb-eslint-strict" />

@@ -1,0 +1,2 @@
+Install Moca as windows service:
+servicemgr -e wo -s manual -t 120 install

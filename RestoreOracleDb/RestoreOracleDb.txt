@@ -1,0 +1,34 @@
+====Hot to restore Oracle DB from customer.==
+1) Remote to bs-pc-922
+mstsc -v bs-pc-922
+
+2) cd dir by tcc or cmd
+Cd D:\dev\citools\scripts\tm_database_script
+
+3) Get schema name:
+[D:\dev\citools\scripts\tm_database_script]impdp system/RedPrairie1@orcl directory=exportdir dumpfile=WMD-FIT.DMP sqlfile=systemddl.txt
+
+4) Create user(schema name):
+[D:\dev\citools\scripts\tm_database_script]create_ora_user.bat system/RedPrairie1 WMDTST
+
+5) Restore command:
+[D:\dev\citools\scripts\tm_database_script]impdp 'system/RedPrairie1@orcl as sysdba' "SCHEMAS=WMDTST" DIRECTORY=exportdir "DUMPFILE=WMD-115205.DMP" "REMAP_SCHEMA=WMDTST:WMDTST" NOLOGFILE=Y
+
+6)if missing table spaces, you can create by following statement:
+create tablespace DATA
+   datafile
+      '&1\WMDTST_DATA_01.dbf' size 10m
+      autoextend on next 10M maxsize UNLIMITED
+      extent management local uniform size  128k 
+      segment space management auto
+
+7) Test 
+[D:\dev\citools\scripts\tm_database_script]sqlplus system/RedPrairie1@orcl 
+select * from WMDTST.wh;
+
+create tablespace DATA
+   datafile
+      '&1\WMDTST_DATA_01.dbf' size 10m
+      autoextend on next 10M maxsize UNLIMITED
+      extent management local uniform size  128k 
+      segment space management auto

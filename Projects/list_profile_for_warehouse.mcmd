@@ -1,0 +1,79 @@
+<command>
+<name>list profile for warehouse</name>
+<description>List Profile For Warehouse</description>
+<type>Local Syntax</type>
+<local-syntax>
+<![CDATA[
+[select 
+		(select count(distinct bldg_id)
+		   from bldg_mst bm
+		  where bm.wh_id = wh.wh_id) num_of_bld,
+		
+		(select count(distinct arecod)
+		   from aremst am
+		  where am.wh_id = wh.wh_id) num_of_are,
+		  
+		(select count(distinct arecod)
+		   from aremst am
+		  where am.wh_id = wh.wh_id
+		    and am.stgflg = 1) num_of_stgare,
+
+		(select count(distinct arecod)
+		   from alloc_search_hdr ash
+		  where ash.wh_id = wh.wh_id
+		    and ash.search_path_typ = 'RPL') num_of_rpl_are,
+		  
+		(select count(distinct arecod)
+		   from alloc_search_hdr ash
+		  where ash.wh_id = wh.wh_id
+		    and ash.search_path_typ = 'PICK') num_of_pck_are,
+
+		(select count(distinct arecod)
+		   from aremst am
+		  where am.wh_id = wh.wh_id
+		    and am.stoare_flg= 1) num_of_stoare,
+			    
+		(select count(distinct arecod)
+		   from invsum ivs
+		  where ivs.wh_id = wh.wh_id) num_of_are_inv,		    
+
+		(select count(distinct stoloc)
+		   from locmst lm
+		  where lm.wh_id = wh.wh_id) num_of_sto,
+
+		(select count(distinct stoloc)
+		   from invsum ivs
+		  where ivs.wh_id = wh.wh_id) num_of_sto_inv,
+		  
+	     (select count(distinct prtnum)
+	        from prtmst_view pv
+	       where pv.wh_id = wh.wh_id) num_of_prt,
+	       
+		 (select count(distinct prtnum)
+		    from invsum ivs
+		   where ivs.wh_id = wh.wh_id) num_of_prt_inv,
+		   
+		 (select sum(untqty)
+		    from invsum ivs
+		   where ivs.wh_id = wh.wh_id) num_of_tot_qty,	
+		   
+		 (select sum(comqty)
+		  from invsum ivs
+		 where ivs.wh_id = wh.wh_id) num_of_tot_comqty
+   from wh
+  where @*
+]
+]]>
+</local-syntax>
+<argument name="@*">wh_id</argument>
+<documentation>
+<remarks>
+<![CDATA[
+  <p>
+  This command is used to get profile for a warehouse. </p>
+]]>
+</remarks>
+<exception value="eOK">Normal successful completion</exception>
+<exception value="eDB_NO_ROWS_AFFECTED">Specified server not found</exception>
+</documentation>
+</command>

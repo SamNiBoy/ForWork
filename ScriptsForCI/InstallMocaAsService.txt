@@ -1,2 +1,5 @@
 Install Moca as windows service:
 servicemgr -e wo -s manual -t 120 install
+
+Install REFS as service:
+refs-server.bat install REFS
